@@ -11,6 +11,7 @@
         "infyomlabs/adminlte-templates": "^5.0",
         "infyomlabs/laravel-generator": "^5.0",
         "infyomlabs/laravel-ui-adminlte": "^5.1",
+        "jeremykenedy/laravel-roles": "^10.0",
         "laravel/framework": "^9.19",
         "laravel/sanctum": "^3.0",
         "laravel/tinker": "^2.7"
