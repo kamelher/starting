@@ -17,6 +17,7 @@ class RolesTableSeeder extends Seeder
          * Role Types
          *
          */
+        
         $RoleItems = [
             [
                 'name'        => 'Admin',

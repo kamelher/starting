@@ -34,7 +34,7 @@
                             @if($item['roles']->count() > 0 || $item['users']->count() > 0)
                                 <div id="collapse_permissions_{{ $itemKey }}" class="collapse" data-parent="#accordion_permissions_{{ $itemKey }}" >
                                     @if($item['roles']->count() > 0)
-                                        <table class="table table-striped table-sm mt-3">
+                                        <table class="table table-striped table-sm mt-3 data-table">
                                             <caption>
                                                 {!! trans('laravelroles::laravelroles.cards.permissions-card.permissions-table-roles-caption', ['permission' => $item['permission']->name]) !!}
                                             </caption>
