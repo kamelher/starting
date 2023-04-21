@@ -15,7 +15,7 @@
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     @endif
 
-
+    @livewireStyles
     @stack('third_party_stylesheets')
 
     @stack('page_css')
@@ -105,5 +105,6 @@
 @stack('third_party_scripts')
 
 @stack('page_scripts')
+@livewireScripts
 </body>
 </html>
