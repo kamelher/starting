@@ -40,7 +40,7 @@ class ActionsTable extends DataTableComponent
                         'showUrl' => route('actions.show', $row->id),
                         'editUrl' => route('actions.edit', $row->id),
                         'recordId' => $row->id,
-                        'title' => __('crud.edit') . ' ' . $row->name_en,
+                        'title' => $row->name_en,
                     ])
                 )
         ];
