@@ -31,3 +31,8 @@ Route::resource('users', App\Http\Controllers\UserController::class);
 
 
 Route::resource('actions', App\Http\Controllers\ActionController::class);
+
+
+
+
+Route::resource('services', App\Http\Controllers\ServiceController::class);

@@ -37,10 +37,10 @@ class ServicesTable extends DataTableComponent
             Column::make("Thumbnail", "thumbnail")
                 ->sortable()
                 ->searchable(),
-            Column::make("Abrivation Ar", "abrivation_ar")
+            Column::make("Abr Latin", "abr_latin")
                 ->sortable()
                 ->searchable(),
-            Column::make("Abrivation En", "abrivation_en")
+            Column::make("Abr Ar", "abr_ar")
                 ->sortable()
                 ->searchable(),
             Column::make("Actions", 'id')
@@ -49,7 +49,7 @@ class ServicesTable extends DataTableComponent
                         'showUrl' => route('services.show', $row->id),
                         'editUrl' => route('services.edit', $row->id),
                         'recordId' => $row->id,
-                        'title' => __('crud.edit') . ' ' . $row->name_en,
+                        'title' => $row->name_en,
                     ])
                 )
         ];
