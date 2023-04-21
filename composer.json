@@ -15,7 +15,8 @@
         "laravel/framework": "^9.19",
         "laravel/sanctum": "^3.0",
         "laravel/tinker": "^2.7",
-        "rappasoft/laravel-livewire-tables": "^2.12"
+        "rappasoft/laravel-livewire-tables": "^2.12",
+        "wire-elements/modal": "^1.0"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.13",

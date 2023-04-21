@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Str;
+use NunoMaduro\Collision\Adapters\Phpunit\TestResult;
 
 class PermissionsTableSeeder extends Seeder
 {
@@ -17,32 +19,40 @@ class PermissionsTableSeeder extends Seeder
          * Permission Types
          *
          */
-        $Permissionitems = [
-            [
-                'name'        => 'Can View Users',
-                'slug'        => 'view.users',
-                'description' => 'Can view users',
-                'model'       => 'Permission',
-            ],
-            [
-                'name'        => 'Can Create Users',
-                'slug'        => 'create.users',
-                'description' => 'Can create new users',
-                'model'       => 'Permission',
-            ],
-            [
-                'name'        => 'Can Edit Users',
-                'slug'        => 'edit.users',
-                'description' => 'Can edit users',
-                'model'       => 'Permission',
-            ],
-            [
-                'name'        => 'Can Delete Users',
-                'slug'        => 'delete.users',
-                'description' => 'Can delete users',
-                'model'       => 'Permission',
-            ],
-        ];
+        $models = ['User', 'Action'];
+        $Permissionitems = [];
+        foreach ($models as $model){
+            $Per = [
+                [
+                    'name'        => 'Can View '. Str::plural($model),
+                    'slug'        => 'view.'.Str::lower(Str::plural($model)),
+                    'description' => 'Can view '. Str::lower(Str::plural($model)),
+                    'model'       => 'Permission',
+                ],
+                [
+                    'name'        => 'Can Create '. Str::plural($model),
+                    'slug'        => 'create.'.Str::lower(Str::plural($model)),
+                    'description' => 'Can create new '. Str::lower(Str::plural($model)),
+                    'model'       => 'Permission',
+                ],
+                [
+                    'name'        => 'Can Edit '. Str::plural($model),
+                    'slug'        => 'edit.'.Str::lower(Str::plural($model)),
+                    'description' => 'Can edit '. Str::lower(Str::plural($model)),
+                    'model'       => 'Permission',
+                ],
+                [
+                    'name'        => 'Can Delete '. Str::plural($model),
+                    'slug'        => 'delete.'.Str::lower(Str::plural($model)),
+                    'description' => 'Can delete '. Str::lower(Str::plural($model)),
+                    'model'       => 'Permission',
+                ],
+            ];
+
+            $Permissionitems += $Per;
+            dd($Permissionitems);
+        }
+
 
         /*
          * Add Permission Items

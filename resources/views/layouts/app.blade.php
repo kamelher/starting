@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"
           integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog=="
           crossorigin="anonymous"/>
-
     @if ( 'ar' === App::getLocale())
         <link href="{{ asset('css/rtl.css') }}" rel="stylesheet">
     @else
@@ -16,6 +15,11 @@
     @endif
 
     @livewireStyles
+    <!-- Alpine v3 -->
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+    <!-- Focus plugin -->
+    <script defer src="https://unpkg.com/@alpinejs/focus@3.x.x/dist/cdn.min.js"></script>
     @stack('third_party_stylesheets')
 
     @stack('page_css')
@@ -100,11 +104,15 @@
     </footer>
 </div>
 
-<script src="{{ asset('js/app.js') }}"></script>
-
+<script src="{{ asset('js/app.js') }}" ></script>
 @stack('third_party_scripts')
 
-@stack('page_scripts')
+
+
 @livewireScripts
+@livewire('livewire-ui-modal')
+<script src="//unpkg.com/alpinejs" defer></script>
+
+@stack('page_scripts')
 </body>
 </html>
