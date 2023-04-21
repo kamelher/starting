@@ -13,10 +13,6 @@ class UsersTable extends DataTableComponent
 
     protected $listeners = ['deleteRecord' => 'deleteRecord'];
 
-    public function updateRecord($id)
-    {
-        dd($id);
-    }
     public function deleteRecord($id)
     {
         User::find($id)->delete();
@@ -46,7 +42,7 @@ class UsersTable extends DataTableComponent
                         'showUrl' => route('users.show', $row->id),
                         'editUrl' => route('users.edit', $row->id),
                         'recordId' => $row->id,
-                        'title' => __('crud.edit') . ' ' . $row->name,
+                        'title' => $row->name,
                     ])
                 )
         ];
