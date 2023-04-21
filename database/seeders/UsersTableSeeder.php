@@ -20,6 +20,7 @@ class UsersTableSeeder extends Seeder
             'password'=>bcrypt('password'),
         ]);
         $roleAdmin = config('roles.models.role')::where('name', '=', 'Admin')->first();
+
         $user->attachRole($roleAdmin);
 
     }

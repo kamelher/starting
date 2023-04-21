@@ -1,9 +1,10 @@
 <div class='btn-group'>
-    <a href="{{ $showUrl }}" class='btn btn-default btn-xs'>
+    <a href="#popUp" href="{{ $editUrl }}"
+       class='btn btn-default btn-xs' onclick="loadeditform('{{ $showUrl }}', '  {{__('crud.show') . ' ' . $title }}')">
         <i class="fa fa-eye"></i>
     </a>
     <a href="#popUp" href="{{ $editUrl }}"
-        class='btn btn-default btn-xs' onclick="loadeditform('{{ $editUrl }}', '{{ $title }}')">
+        class='btn btn-default btn-xs' onclick="loadeditform('{{ $editUrl }}', '{{__('crud.edit') . ' ' . $title }}')">
         <i class="fa fa-edit"></i>
     </a>
     <a class='btn btn-danger btn-xs' wire:click="deleteRecord({{ $recordId }})"
