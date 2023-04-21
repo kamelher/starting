@@ -2,8 +2,7 @@
     <a href="{{ $showUrl }}" class='btn btn-default btn-xs'>
         <i class="fa fa-eye"></i>
     </a>
-    <a href="#popUp" href="{{ $editUrl }}"
-        class='btn btn-default btn-xs' onclick="loadeditform('{{ $editUrl }}', '{{ $title }}')">
+    <a href="{{ $editUrl }}" class='btn btn-default btn-xs'>
         <i class="fa fa-edit"></i>
     </a>
     <a class='btn btn-danger btn-xs' wire:click="deleteRecord({{ $recordId }})"
