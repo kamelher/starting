@@ -13,7 +13,7 @@ return [
     ],
     'ar' => [
         'display' => 'عربي',
-        'flag-icon' => 'ar',
+        'flag-icon' => 'dz',
         'dir'=>'rtl'
     ],
 ];
