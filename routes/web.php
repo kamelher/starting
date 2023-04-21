@@ -28,4 +28,6 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Auth::routes();
 
 Route::resource('users', App\Http\Controllers\UserController::class);
+
+
 Route::resource('actions', App\Http\Controllers\ActionController::class);
