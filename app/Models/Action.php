@@ -14,6 +14,7 @@ class Action extends Model
     ];
 
     protected $casts = [
+        'id' => 'integer',
         'name_ar' => 'string',
         'name_en' => 'string'
     ];

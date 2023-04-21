@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\Action;
 use Illuminate\Database\Seeder;
 
 class ActionsTableSeeder extends Seeder
@@ -14,6 +13,6 @@ class ActionsTableSeeder extends Seeder
      */
     public function run()
     {
-        Action::factory(10)->create();
+
     }
 }
