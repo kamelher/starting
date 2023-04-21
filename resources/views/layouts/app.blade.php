@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ App::getLocale()}}" dir="{{ Config::get('languages')[App::getLocale()]['dir'] }}">
 <head>
     <meta charset="UTF-8">
     <title>{{ config('app.name') }}</title>
@@ -9,7 +9,12 @@
           integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog=="
           crossorigin="anonymous"/>
 
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    @if ( 'ar' === App::getLocale())
+        <link href="{{ asset('css/rtl.css') }}" rel="stylesheet">
+    @else
+        <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    @endif
+
 
     @stack('third_party_stylesheets')
 
@@ -56,7 +61,23 @@
                             @csrf
                         </form>
                     </li>
+
                 </ul>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="flag-icon flag-icon-{{Config::get('languages')[App::getLocale()]['flag-icon']}}"></span>
+                    {{ Config::get('languages')[App::getLocale()]['display'] }}
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    @foreach (Config::get('languages') as $lang => $language)
+                        @if ($lang != App::getLocale())
+                            <a class="dropdown-item" href="{{ route('lang.switch', $lang) }}">
+                                <span class="flag-icon flag-icon-{{$language['flag-icon']}}"></span>
+                                {{$language['display']}}</a>
+                        @endif
+                    @endforeach
+                </div>
             </li>
         </ul>
     </nav>
