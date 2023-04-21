@@ -67,7 +67,6 @@
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <span class="fi fi-{{Config::get('languages')[App::getLocale()]['flag-icon']}}"></span>
-                    <span class="fi fi-gr"></span> <span class="fi fi-gr fis"></span>
                     {{ Config::get('languages')[App::getLocale()]['display'] }}
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
@@ -87,7 +86,7 @@
 @include('layouts.sidebar')
 
 <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
+    <div class="content-wrapper p-4">
         @yield('content')
     </div>
 
