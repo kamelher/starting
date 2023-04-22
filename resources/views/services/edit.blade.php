@@ -4,7 +4,7 @@
 
         <div class="card">
 
-            {!! Form::model($service, ['route' => ['services.update', $service->id], 'method' => 'patch']) !!}
+            {!! Form::model($service, ['route' => ['services.update', $service->id], 'method' => 'patch', 'files'=>true]) !!}
 
             <div class="card-body">
                 <div class="row">

@@ -25,6 +25,7 @@
 
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 __webpack_require__(/*! admin-lte */ "./node_modules/admin-lte/dist/js/adminlte.min.js");
+__webpack_require__(/*! ./myfunction */ "./resources/js/myfunction.js");
 
 /***/ }),
 
@@ -64,6 +65,29 @@ try {
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     encrypted: true
 // });
+
+/***/ }),
+
+/***/ "./resources/js/myfunction.js":
+/*!************************************!*\
+  !*** ./resources/js/myfunction.js ***!
+  \************************************/
+/***/ (() => {
+
+function readURL(input) {
+  if (input.files && input.files[0]) {
+    var reader = new FileReader();
+    reader.onload = function (e) {
+      $('#imagePreview').css('background-image', 'url(' + e.target.result + ')');
+      $('#imagePreview').hide();
+      $('#imagePreview').fadeIn(650);
+    };
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+$(document).on("change", "#thumbnail", function () {
+  readURL(this);
+});
 
 /***/ }),
 

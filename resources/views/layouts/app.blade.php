@@ -106,9 +106,6 @@
 
 <script src="{{ asset('js/app.js') }}" ></script>
 @stack('third_party_scripts')
-
-
-
 @livewireScripts
 @livewire('livewire-ui-modal')
 <script src="//unpkg.com/alpinejs" defer></script>
