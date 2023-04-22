@@ -5,6 +5,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use jeremykenedy\LaravelRoles\Traits\HasRoleAndPermission;
@@ -23,7 +24,8 @@ class User  extends Authenticatable
         'email',
         'email_verified_at',
         'password',
-        'remember_token'
+        'service_id'
+
     ];
 
     protected $casts = [
@@ -34,14 +36,20 @@ class User  extends Authenticatable
         'remember_token' => 'string'
     ];
 
+
     public static array $rules = [
         'name' => 'required|string|max:255',
         'email' => 'required|string|max:255',
         'email_verified_at' => 'nullable',
+        'service_id' => 'required',
         'password' => 'required|string|max:255',
-        'remember_token' => 'nullable|string|max:100',
         'created_at' => 'nullable',
         'updated_at' => 'nullable'
+    ];
+    public static array $UpdateRules = [
+        'name' => 'required|string|max:255',
+        'email' => 'required|string|max:255',
+        'service_id' => 'required',
     ];
 
     public function permissionUsers(): \Illuminate\Database\Eloquent\Relations\HasMany
@@ -52,5 +60,10 @@ class User  extends Authenticatable
     public function roleUsers(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(\App\Models\RoleUser::class, 'user_id');
+    }
+
+    public function service(): BelongsTo
+    {
+        return $this->belongsTo(Service::class);
     }
 }

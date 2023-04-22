@@ -27,16 +27,20 @@ class ServicesTable extends DataTableComponent
 
     public function columns(): array
     {
+
         return [
+            Column::make("", "thumbnail") ->format(
+                fn($value, $row, Column $column) => view('common.livewire-tables.image', [
+                    'path'=>$row->getMedia('thumbnail')
+                ])
+            ),
             Column::make("Name Ar", "name_ar")
                 ->sortable()
                 ->searchable(),
             Column::make("Name En", "name_en")
                 ->sortable()
                 ->searchable(),
-            Column::make("Thumbnail", "thumbnail")
-                ->sortable()
-                ->searchable(),
+
             Column::make("Abr Latin", "abr_latin")
                 ->sortable()
                 ->searchable(),
@@ -50,6 +54,7 @@ class ServicesTable extends DataTableComponent
                         'editUrl' => route('services.edit', $row->id),
                         'recordId' => $row->id,
                         'title' => $row->name_en,
+                        'path'=>$row->getMedia('thumbnail')
                     ])
                 )
         ];

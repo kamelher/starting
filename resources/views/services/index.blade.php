@@ -8,9 +8,9 @@
                     <h1>@lang('models/services.plural')</h1>
                 </div>
                 <div class="col-sm-6">
-                    <a class="btn btn-primary float-right"
-                       href="{{ route('services.create') }}">
-                         @lang('crud.add_new')
+                    <a href="#popUp"
+                       class="btn btn-primary float-right" onclick="loadeditform('{{ route('services.create') }}', '  {{__('crud.add_new') }}')">
+                        @lang('crud.add_new')
                     </a>
                 </div>
             </div>

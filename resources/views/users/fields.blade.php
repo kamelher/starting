@@ -10,6 +10,17 @@
     {!! Form::email('email', null, ['class' => 'form-control', 'required', 'maxlength' => 255, 'maxlength' => 255]) !!}
 </div>
 
+<!-- Service Field -->
+<div class="form-group col-sm-6">
+    {!! Form::label('service_id', __('models/users.fields.sevice_id').':') !!}
+    {!! Form::select('service_id',$ServiceItems, null, ['class' => 'form-control', 'required']) !!}
+</div>
+<!-- Role Field -->
+<div class="form-group col-sm-6">
+    {!! Form::label('role_id', __('models/users.fields.sevice_id').':') !!}
+    {!! Form::select('role_id',$rolesItems, null, ['class' => 'form-control', 'required']) !!}
+</div>
+
 <!-- Email Verified At Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('email_verified_at', __('models/users.fields.email_verified_at').':') !!}
@@ -22,17 +33,16 @@
     </script>
 @endpush
 
-<!-- password Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('password', __('models/users.fields.password').':') !!}
-    {!! Form::password('password', ['class' => 'form-control', 'required', 'maxlength' => 255, 'maxlength' => 255]) !!}
-</div>
 
-<!-- Remember Token Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('remember_token', __('models/users.fields.remember_token').':') !!}
-    {!! Form::text('remember_token', null, ['class' => 'form-control', 'maxlength' => 100, 'maxlength' => 100]) !!}
-</div>
+@if(!empty($create) && $create )
+    <!-- password Field -->
+    <div class="form-group col-sm-6">
+        {!! Form::label('password', __('models/users.fields.password').':') !!}
+        {!! Form::password('password', ['class' => 'form-control', 'maxlength' => 255, 'maxlength' => 255]) !!}
+    </div>
+@endif
+
+
 
 @push('third_party_stylesheets')
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" integrity="sha512-mSYUmp1HYZDFaVKK//63EcZq4iFWFjxSL+Z3T/aCt4IO9Cejm03q3NKKYN6pFQzY0SBOr8h+eCIAZHPXcpZaNw==" crossorigin="anonymous" referrerpolicy="no-referrer" />

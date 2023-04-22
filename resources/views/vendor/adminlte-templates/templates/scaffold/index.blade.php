@@ -12,9 +12,12 @@
 @endif
                 </div>
                 <div class="col-sm-6">
-                    <a class="btn btn-primary float-right"
-                       href="@{{ route('{!! $config->prefixes->getRoutePrefixWith('.') !!}{!! $config->modelNames->camelPlural !!}.create') }}">
-@if($config->options->localized)
+                    <a href="#popUp"
+                        class="btn btn-primary float-right"
+                        onclick="loadeditform('@{{ route('{!! $config->prefixes->getRoutePrefixWith('.') !!}{!! $config->modelNames->camelPlural !!}.create') }}',
+                                            '@{{ trans('crud.add_new') }}')">
+
+                    @if($config->options->localized)
                          @@lang('crud.add_new')
 @else
                         Add New

@@ -24,8 +24,8 @@ class UpdateServiceRequest extends FormRequest
      */
     public function rules()
     {
-        $rules = Service::$rules;
-        
+        $rules = Service::$UpdateRules;
+
         return $rules;
     }
 }
