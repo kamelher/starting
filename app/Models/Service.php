@@ -2,9 +2,8 @@
 
 namespace App\Models;
 
-use App\Traits\Uploader;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
- use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Plank\Mediable\Mediable;
 
@@ -52,4 +51,10 @@ class Service extends Model
     {
         return $this->hasMany(User::class);
     }
+
+    public function registers(): HasMany
+    {
+        return $this->hasMany(Register::class);
+    }
+
 }

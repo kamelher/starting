@@ -26,7 +26,9 @@
     },
     "dependencies": {
         "bootstrap-datepicker": "^1.9.0",
+        "bootstrap-switch-button": "^1.1.0",
         "flag-icon-css": "^4.1.7",
-        "flag-icons": "^6.6.6"
+        "flag-icons": "^6.6.6",
+        "select2": "^4.1.0-rc.0"
     }
 }
