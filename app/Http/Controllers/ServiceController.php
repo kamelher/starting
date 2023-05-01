@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CreateServiceRequest;
 use App\Http\Requests\UpdateServiceRequest;
 use App\Http\Controllers\AppBaseController;
+use App\Models\Register;
+use App\Models\Service;
 use App\Repositories\ServiceRepository;
 use Illuminate\Http\Request;
 use Flash;
@@ -24,6 +26,7 @@ class ServiceController extends AppBaseController
      */
     public function index(Request $request)
     {
+        $this->authorize('ViewAny', Service::class);
         return view('services.index');
     }
 
@@ -32,6 +35,7 @@ class ServiceController extends AppBaseController
      */
     public function create()
     {
+        $this->authorize('Create', Service::class);
         return view('services.create');
     }
 
@@ -40,6 +44,7 @@ class ServiceController extends AppBaseController
      */
     public function store(CreateServiceRequest $request)
     {
+        $this->authorize('Create', Service::class);
         $input = $request->all();
 
         $service = $this->serviceRepository->create($input);
@@ -54,6 +59,7 @@ class ServiceController extends AppBaseController
      */
     public function show($id)
     {
+        $this->authorize('ViewAny', Service::class);
         $service = $this->serviceRepository->find($id);
 
         if (empty($service)) {
@@ -70,6 +76,7 @@ class ServiceController extends AppBaseController
      */
     public function edit($id)
     {
+        $this->authorize('Update', Service::class);
         $service = $this->serviceRepository->find($id);
 
         if (empty($service)) {
@@ -86,6 +93,7 @@ class ServiceController extends AppBaseController
      */
     public function update($id, UpdateServiceRequest $request)
     {
+        $this->authorize('Update', Service::class);
         $service = $this->serviceRepository->find($id);
 
         if (empty($service)) {
@@ -108,6 +116,7 @@ class ServiceController extends AppBaseController
      */
     public function destroy($id)
     {
+        $this->authorize('Delete', Service::class);
         $service = $this->serviceRepository->find($id);
 
         if (empty($service)) {

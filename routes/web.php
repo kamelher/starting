@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CirculationController;
+use App\Http\Controllers\searchableMailController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,16 +29,16 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Auth::routes();
 
-Route::resource('users', App\Http\Controllers\UserController::class);
+Route::resource('administration/users', App\Http\Controllers\UserController::class);
 
 
-Route::resource('actions', App\Http\Controllers\ActionController::class);
+Route::resource('administration/actions', App\Http\Controllers\ActionController::class);
 
 
-Route::resource('services', App\Http\Controllers\ServiceController::class);
+Route::resource('administration/services', App\Http\Controllers\ServiceController::class);
 
 
-Route::resource('registers', App\Http\Controllers\RegisterController::class);
+Route::resource('administration/registers', App\Http\Controllers\RegisterController::class);
 
 Route::get('circulation/record/{id}', action: [CirculationController::class, 'recordInRegister'])->name('circulation.record');
 
@@ -47,8 +48,35 @@ Route::get('circulation/send/{id}', action: [CirculationController::class, 'send
 
 Route::patch('circulation/send/{id}', action: [CirculationController::class, 'storeSended'])->name('circulation.send.store');
 
-Route::get('mails/processing/{id}', action: [CirculationController::class, 'processing'])->name('circulation.processing');
+Route::get('circulation/SendProcessing/{id}', action: [CirculationController::class, 'SendProcessing'])->name('circulation.SendProcessing');
+
+Route::patch('circulation/SendProcessing/{id}', action: [CirculationController::class, 'storeSendProcessing'])->name('circulation.SendProcessing.store');
+
+Route::get('circulation/processing/{id}', action: [CirculationController::class, 'processing'])->name('circulation.processing');
 
 Route::patch('circulation/processing/{id}', action: [CirculationController::class, 'storeProcessing'])->name('circulation.processing.store');
+
+
+/**
+ * Get arrived mails
+ */
+Route::get('mails/arrived', action: [searchableMailController::class, 'index'])->name('mails.search.arrived');
+
+/**
+ * Get Income mails
+ */
+Route::get('mails/income', action: [searchableMailController::class, 'income'])->name('mails.search.income');
+/**
+ * Get processed  mails with the aim to dispatch
+ */
+Route::get('mails/needDispatch', action: [searchableMailController::class, 'needDispatch'])->name('mails.search.needdispatch');
+/**
+ * Get needsProcessing mails
+ */
+Route::get('mails/needProcess', action: [searchableMailController::class, 'needprocess'])->name('mails.search.needprocess');
+/**
+ * Get Outcomes mails
+ */
+Route::get('mails/outcome', action: [searchableMailController::class, 'outcome'])->name('mails.search.outcome');
 
 Route::resource('mails', App\Http\Controllers\MailController::class);

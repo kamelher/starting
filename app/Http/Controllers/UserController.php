@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CreateUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Http\Controllers\AppBaseController;
+use App\Models\Action;
+use App\Models\User;
 use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
 use Flash;
@@ -24,6 +26,7 @@ class UserController extends AppBaseController
      */
     public function index(Request $request)
     {
+        $this->authorize('ViewAny', User::class);
         return view('users.index');
     }
 
@@ -32,6 +35,7 @@ class UserController extends AppBaseController
      */
     public function create()
     {
+        $this->authorize('Create', User::class);
         return view('users.create');
     }
 
@@ -40,6 +44,7 @@ class UserController extends AppBaseController
      */
     public function store(CreateUserRequest $request)
     {
+        $this->authorize('Create', User::class);
         $input = $request->all();
 
         $user = $this->userRepository->create($input);
@@ -54,6 +59,7 @@ class UserController extends AppBaseController
      */
     public function show($id)
     {
+        $this->authorize('ViewAny', User::class);
         $user = $this->userRepository->find($id);
 
         if (empty($user)) {
@@ -70,6 +76,7 @@ class UserController extends AppBaseController
      */
     public function edit($id)
     {
+        $this->authorize('Update', User::class);
         $user = $this->userRepository->find($id);
 
         if (empty($user)) {
@@ -86,6 +93,8 @@ class UserController extends AppBaseController
      */
     public function update($id, UpdateUserRequest $request)
     {
+        $this->authorize('Update', User::class);
+
         $user = $this->userRepository->find($id);
 
         if (empty($user)) {
@@ -108,6 +117,7 @@ class UserController extends AppBaseController
      */
     public function destroy($id)
     {
+        $this->authorize('Delete', User::class);
         $user = $this->userRepository->find($id);
 
         if (empty($user)) {

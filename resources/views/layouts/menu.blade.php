@@ -1,25 +1,17 @@
 <!-- need to remove -->
+<li class="nav-item">
+    <a href="{{ route('home') }}" class="nav-link {{ Request::is('home') ? 'active' : '' }}">
+        <i class="nav-icon fas fa-home"></i>
+        <p>{{__('nav.home')}}</p>
+    </a>
+</li>
+
+
+@role('admin')
 @include('partials.admin')
+@endrole
 
 
-
-
-
-
-
-
-
-
-<li class="nav-item">
-    <a href="{{ route('registers.index') }}" class="nav-link {{ Request::is('registers*') ? 'active' : '' }}">
-        <i class="nav-icon fas fa-home"></i>
-        <p>@lang('models/registers.plural')</p>
-    </a>
-</li>
-
-<li class="nav-item">
-    <a href="{{ route('mails.index') }}" class="nav-link {{ Request::is('mails*') ? 'active' : '' }}">
-        <i class="nav-icon fas fa-home"></i>
-        <p>@lang('models/mails.plural')</p>
-    </a>
-</li>
+@role('secretariat')
+@include('partials.secretariat')
+@endrole

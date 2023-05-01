@@ -7,6 +7,7 @@ return [
     'updated'   => ':model updated successfully.',
     'deleted'   => ':model deleted successfully.',
     'not_found' => ':model not found',
-    'welcome'   => 'Welcome'
+    'welcome'   => 'Welcome',
+    'send_to'   => 'Depending of the  orientations: send this mail to:'
 
 ];

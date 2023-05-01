@@ -3,6 +3,7 @@
 return [
 
     'home'      => 'Home',
-    'roles'     => 'Roles administration'
+    'roles'     => 'Roles administration',
+    'settings'  =>  'Platform administration'
 
 ];

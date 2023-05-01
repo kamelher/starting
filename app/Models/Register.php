@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Scopes\ServiceScope;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -100,5 +101,12 @@ class Register extends Model
             )
             ->using(circulation::class)
             ->withTimestamps();
+    }
+
+
+    protected static function booted()
+    {
+        static::addGlobalScope(new ServiceScope());
+
     }
 }

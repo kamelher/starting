@@ -18,6 +18,9 @@ return new class extends Migration
             $table->string('reference_number')->nullable();
             $table->boolean('response_needed')->default(false);
             $table->timestamp('response_deadline')->nullable();
+            $table->json('orientation_data')->nullable();
+            $table->text('orientation_text')->nullable();
+            $table->timestamp('dispatched_at')->nullable();
         });
     }
 
@@ -32,6 +35,10 @@ return new class extends Migration
             $table->removeColumn('reference_number');
             $table->removeColumn('response_needed');
             $table->removeColumn('response_deadline');
+            $table->removeColumn('orientation_data');
+            $table->removeColumn('orientation_text');
+            $table->removeColumn('dispatched_at');
+
             //
         });
     }

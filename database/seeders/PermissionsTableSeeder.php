@@ -18,11 +18,10 @@ class PermissionsTableSeeder extends Seeder
          * Permission Types
          *
          */
-        $models = ['User', 'Action'];
-        $Permissionitems = [];
+        $models = getAllModels();
+        $PermissionItems = [];
         foreach ($models as $model){
-            echo $model;
-            $Permissionitems = [
+            $PermissionItems = [
                 [
                     'name' => 'Can View ' . Str::plural($model),
                     'slug' => 'view.' . Str::lower(Str::plural($model)),
@@ -47,12 +46,39 @@ class PermissionsTableSeeder extends Seeder
                     'description' => 'Can delete ' . Str::lower(Str::plural($model)),
                     'model' => 'Permission',
                 ],
+
+                [
+                    'name' => 'Can Record ' . Str::plural($model),
+                    'slug' => 'record.' . Str::lower(Str::plural($model)),
+                    'description' => 'Can record ' . Str::lower(Str::plural($model)),
+                    'model' => 'Permission',
+                ],
+
+                [
+                    'name' => 'Can Send ' . Str::plural($model),
+                    'slug' => 'send.' . Str::lower(Str::plural($model)),
+                    'description' => 'Can send ' . Str::lower(Str::plural($model)),
+                    'model' => 'Permission',
+                ],
+
+                [
+                    'name' => 'Can Process ' . Str::plural($model),
+                    'slug' => 'process.' . Str::lower(Str::plural($model)),
+                    'description' => 'Can process ' . Str::lower(Str::plural($model)),
+                    'model' => 'Permission',
+                ],
+                [
+                    'name' => 'Can Dispatch ' . Str::plural($model),
+                    'slug' => 'dispatch.' . Str::lower(Str::plural($model)),
+                    'description' => 'Can dispatch ' . Str::lower(Str::plural($model)),
+                    'model' => 'Permission',
+                ],
             ];
             /*
        * Add Permission Items
        *
        */
-            foreach ($Permissionitems as $Permissionitem) {
+            foreach ($PermissionItems as $Permissionitem) {
                 $newPermissionitem = config('roles.models.permission')::where('slug', '=', $Permissionitem['slug'])->first();
                 if ($newPermissionitem === null) {
                     $newPermissionitem = config('roles.models.permission')::create([

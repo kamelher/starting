@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CreateActionRequest;
 use App\Http\Requests\UpdateActionRequest;
 use App\Http\Controllers\AppBaseController;
+use App\Models\Action;
 use App\Repositories\ActionRepository;
 use Illuminate\Http\Request;
 use Flash;
@@ -24,6 +25,7 @@ class ActionController extends AppBaseController
      */
     public function index(Request $request)
     {
+        $this->authorize('viewAny', Action::class);
         return view('actions.index');
     }
 
@@ -32,6 +34,7 @@ class ActionController extends AppBaseController
      */
     public function create()
     {
+        $this->authorize('create', Action::class);
         return view('actions.create');
     }
 
@@ -40,6 +43,7 @@ class ActionController extends AppBaseController
      */
     public function store(CreateActionRequest $request)
     {
+        $this->authorize('create', Action::class);
         $input = $request->all();
 
         $action = $this->actionRepository->create($input);
@@ -54,6 +58,7 @@ class ActionController extends AppBaseController
      */
     public function show($id)
     {
+        $this->authorize('viewAny', Action::class);
         $action = $this->actionRepository->find($id);
 
         if (empty($action)) {
@@ -70,6 +75,7 @@ class ActionController extends AppBaseController
      */
     public function edit($id)
     {
+        $this->authorize('update', Action::class);
         $action = $this->actionRepository->find($id);
 
         if (empty($action)) {
@@ -86,6 +92,7 @@ class ActionController extends AppBaseController
      */
     public function update($id, UpdateActionRequest $request)
     {
+        $this->authorize('update', Action::class);
         $action = $this->actionRepository->find($id);
 
         if (empty($action)) {
@@ -108,6 +115,7 @@ class ActionController extends AppBaseController
      */
     public function destroy($id)
     {
+        $this->authorize('delete', Action::class);
         $action = $this->actionRepository->find($id);
 
         if (empty($action)) {
