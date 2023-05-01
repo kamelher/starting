@@ -4,6 +4,7 @@ namespace App\Traits;
 
 use Plank\Mediable\Facades\MediaUploader;
 use Plank\Mediable\Media;
+use Str;
 
 trait Uploader
 {
@@ -40,7 +41,7 @@ trait Uploader
         if (is_array($input[$fileInputName])) {
             foreach ($input[$fileInputName] as $file) {
                 # code...
-                $filename2 = (string) Str::uuid().'_' . $filename . time();
+                $filename2 = (string)'_' . $filename . time();
                 $media = MediaUploader::fromSource($file)
                     ->toDestination('public', $distination)
                     ->useFilename($filename2)

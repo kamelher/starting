@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CreateMailRequest;
-use App\Http\Requests\UpdateMailRequest;
+use App;
 use App\Repositories\MailRepository;
+use App\Repositories\ServiceRepository;
+use App\Repositories\UserRepository;
 use App\Services\CirculationService;
+use Auth;
 use Flash;
 use Illuminate\Http\Request;
 
@@ -28,6 +30,7 @@ class CirculationController extends AppBaseController
      */
     public function recordInRegister($id)
     {
+        $this->authorize('record',App\Models\circulation::class);
         $mail = $this->mailRepository->find($id);
 
         if (empty($mail)) {
@@ -43,6 +46,7 @@ class CirculationController extends AppBaseController
      */
     public function storeRecorded($id, Request $request)
     {
+        $this->authorize('record',App\Models\circulation::class);
         $mail = $this->mailRepository->find($id);
 
         if (empty($mail)) {
@@ -55,7 +59,7 @@ class CirculationController extends AppBaseController
 
         Flash::success(__('messages.updated', ['model' => __('models/mails.singular')]));
 
-        return redirect(route('mails.index'));
+        return redirect(route('mails.search.arrived'));
     }
 
 
@@ -66,11 +70,12 @@ class CirculationController extends AppBaseController
      */
     public function send($id)
     {
+        $this->authorize('send',App\Models\circulation::class);
 
         $mail = $this->mailRepository->find($id);
 
         if (empty($mail)) {
-            Flash::error(__('models/mails.singular').' '.__('messages.not_found'));
+            Flash::error(__('models/mails.singular') . ' ' . __('messages.not_found'));
 
             return redirect(route('mails.index'));
         }
@@ -79,14 +84,69 @@ class CirculationController extends AppBaseController
     }
 
     /**
+     * Show the specified Mail to send it to its distinction.
+     */
+    public function SendProcessing($id)
+    {
+        $this->authorize('dispatch',App\Models\circulation::class);
+        $mail = $this->mailRepository->find($id);
+        $pivot = $mail->processMailInRegisters(Auth::id())->first();
+        $data = json_decode($pivot->pivot->processed_data);
+        $receivers = [];
+        foreach ($data as $key => $value)
+        {
+            $column = 'name_'.App::getLocale();
+            $service = (new ServiceRepository())->find($value);
+            $receivers [$service->id] = $service->$column;
+        }
+
+        $orientations = $pivot->pivot->processed_orientations;
+
+
+        if (empty($mail)) {
+            Flash::error(__('models/mails.singular') . ' ' . __('messages.not_found'));
+
+            return redirect(route('mails.index'));
+        }
+
+        return view('circulation.send_process.form')
+                    ->with('mail', $mail)
+                    ->with('pivot', $pivot)
+                    ->with('orientations', $orientations)
+                    ->with('receivers',$receivers);
+    }
+
+    /**
+     * Show the specified Mail to send it to its distinction.
+     */
+    public function storeSendProcessing($id, Request $request)
+    {
+        $this->authorize('dispatch',App\Models\circulation::class);
+        $mail = $this->mailRepository->find($id);
+
+        if (empty($mail)) {
+            Flash::error(__('models/mails.singular') . ' ' . __('messages.not_found'));
+
+            return redirect(route('mails.index'));
+        }
+
+        $this->circulationService->storeSendProcessing($mail, $request);
+
+        Flash::success(__('messages.updated', ['model' => __('models/mails.singular')]));
+
+        return redirect(route('mails.search.needdispatch'));
+
+    }
+    /**
      * Store sent  Mail  to its distinction.
      */
     public function storeSended($id, Request $request)
     {
+        $this->authorize('send',App\Models\circulation::class);
         // find mail
         $mail = $this->mailRepository->find($id);
         if (empty($mail)) {
-            Flash::error(__('models/mails.singular').' '.__('messages.not_found'));
+            Flash::error(__('models/mails.singular') . ' ' . __('messages.not_found'));
 
             return redirect(route('mails.index'));
         }
@@ -106,6 +166,7 @@ class CirculationController extends AppBaseController
      */
     public function processing($id)
     {
+        $this->authorize('process',App\Models\circulation::class);
         $mail = $this->mailRepository->find($id);
 
         if (empty($mail)) {
@@ -124,12 +185,13 @@ class CirculationController extends AppBaseController
      */
     public function storeProcessing($id, Request $request)
     {
+        $this->authorize('process',App\Models\circulation::class);
         // find mail
         $mail = $this->mailRepository->find($id);
         if (empty($mail)) {
             Flash::error(__('models/mails.singular').' '.__('messages.not_found'));
 
-            return redirect(route('mails.index'));
+            return redirect(route('mails.search.needprocess'));
         }
 
         $mail = $this->circulationService->storeProcessing($mail, $request);
@@ -137,7 +199,7 @@ class CirculationController extends AppBaseController
 
         Flash::success(__('messages.updated', ['model' => __('models/mails.singular')]));
 
-        return redirect(route('mails.index'));
+        return redirect(route('mails.search.needprocess'));
     }
 
 }

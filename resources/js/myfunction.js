@@ -20,6 +20,7 @@ $(document).on("show.bs.modal", ".modal", function () {
             theme: 'classic',
         }
     );
+
 });
 
 

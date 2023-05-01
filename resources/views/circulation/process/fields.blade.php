@@ -17,10 +17,10 @@
     <h3 class="offset-3 col-7 badge-pill badge-warning p-1 text-center">{{__('models/circulations.fields.fiche')}} </h3>
     @foreach($actionItems as $action)
         <div class="form-group col-sm-3">
-            {!! Form::label('actions', $action.':') !!}
+            {!! Form::label('processed_data', $action.':') !!}
         </div>
         <div class="form-group col-sm-3">
-            {!! Form::select('actions['.$action.']', $ServiceItems, null, ['class' => 'form-control custom-select receiversSelect select2-purple','multiple'=>'true','style'=>"width: 100%"]) !!}
+            {!! Form::select('processed_data['.$action.']', $ServiceItems, null, ['class' => 'form-control custom-select receiversSelect select2-purple','multiple'=>'true','style'=>"width: 100%"]) !!}
         </div>
     @endforeach
 </div>
@@ -31,8 +31,11 @@
         <div class="row">
             <!-- Default checked -->
             <div class="form-group col-6 custom-switch text-center">
-                <input type="checkbox" class="custom-control-input" id="response_needed" name="response_needed" data-val="true"  value="true">
-                <label class="custom-control-label" for="response_needed">{{__('models/circulations.fields.response_needed')}}</label>
+                <h3>{{__('models/circulations.fields.response_needed')}}</h3>
+                {!! Form::radio('response_needed', 1, ['class' => 'form-control']) !!}
+                {!! Form::label('response_needed', __('models/circulations.fields.Oui').':') !!}
+                {!! Form::radio('response_needed', 0, ['class' => 'form-control', 'checked'=>'true']) !!}
+                {!! Form::label('response_needed', __('models/circulations.fields.Non').':') !!}
             </div>
 
             <div class="form-group col-6">

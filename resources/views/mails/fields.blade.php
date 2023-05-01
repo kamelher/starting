@@ -15,3 +15,9 @@
     {!! Form::label('body', __('models/mails.fields.body').':') !!}
     {!! Form::textarea('body', null, ['class' => 'form-control', 'required']) !!}
 </div>
+
+<!-- FILE Number -->
+<div class="form-group col-sm-12">
+    {!! Form::label('attachments[]', __('models/circulations.fields.attachments').':') !!}
+    {!! Form::file('attachments[]', ['class' => 'form-control','multiple'=>'true']) !!}
+</div>

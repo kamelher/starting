@@ -26,7 +26,6 @@ class CirculationService
         ], $request->except('register_id'));
 
         foreach ($data['receiver_id'] as $item) {
-            echo $item;
             $row[$register_id] = [
                 'receiver_id' => $item,
                 'sent_number' => $data['sent_number'],
@@ -34,7 +33,6 @@ class CirculationService
                 'sent_at' => now()->toDate(),
                 'arrived_at' => now()->toDate(),
             ];
-
             $tmp[$item] = $row;
         }
         return $tmp;
@@ -89,8 +87,50 @@ class CirculationService
     public function storeProcessing(Mail $mail, Request $request): Mail
     {
 
-       dd($request->all());
+        //dd($request->all());
+        $data = $request->validate([
+            'processed_data.*'=>'sometimes',
+            'response_needed'=>'required',
+            'response_deadline'=>'nullable',
+            'processed_orientations'=>'sometimes'
+        ]);
+        $data['processed_at'] = now()->toDate();
+
+
+        //dd($data);
+        $mail->actualregister(\Auth::id())->update($data);
+
         return $mail;
     }
+    /**
+     * Send the processed mail
+     */
+
+    public function storeSendProcessing(Mail $mail, Request $request): Mail
+    {
+
+        $data = $this->createReceivers($request);
+        $mail->actualregister(\Auth::user()->service_id)->update(['dispatched_at'=>now()->toDate()]);
+        $copy = $mail->duplicate();
+        //attach mails to register with request data
+        foreach ($data as $row) {
+            foreach ($row as $key =>$value)
+            {
+                $row[$key]['orientation_data'] = $mail->processMailInRegisters(\Auth::id())->first()->pivot->processed_data;
+                $row[$key]['orientation_text'] = $mail->processMailInRegisters(\Auth::id())->first()->pivot->processed_orientations;
+            }
+            $copy->registers()->attach($row);
+        }
+
+        if($mail->hasMedia('attachments')){
+            foreach ($mail->getMedia('attachments') as $media)
+                $copy->attachMedia($media,'attachments');
+        }
+
+        return $mail;
+    }
+
+
+
 
 }

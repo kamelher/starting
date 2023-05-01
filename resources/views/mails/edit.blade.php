@@ -4,7 +4,7 @@
 
     <div class="card">
 
-        {!! Form::model($mail, ['route' => ['mails.update', $mail->id], 'method' => 'patch']) !!}
+        {!! Form::model($mail, ['route' => ['mails.update', $mail->id], 'method' => 'patch', 'files'=>true]) !!}
 
         <div class="card-body">
             <div class="row">
@@ -18,7 +18,6 @@
         </div>
 
         {!! Form::close() !!}
-
     </div>
 </div>
 

@@ -8,6 +8,7 @@
                     <h1>@lang('models/mails.plural')</h1>
                 </div>
                 <div class="col-sm-6">
+                    @permission('create.mails')
                     <a href="#popUp"
                         class="btn btn-primary float-right"
                         onclick="loadeditform('{{ route('mails.create') }}',
@@ -15,6 +16,7 @@
 
                                              @lang('crud.add_new')
                     </a>
+                    @endpermission
                 </div>
             </div>
         </div>

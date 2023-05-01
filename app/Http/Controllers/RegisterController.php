@@ -4,10 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateRegisterRequest;
 use App\Http\Requests\UpdateRegisterRequest;
-use App\Http\Controllers\AppBaseController;
+use App\Models\Action;
+use App\Models\Register;
 use App\Repositories\RegisterRepository;
-use Illuminate\Http\Request;
 use Flash;
+use Illuminate\Http\Request;
 
 class RegisterController extends AppBaseController
 {
@@ -24,6 +25,8 @@ class RegisterController extends AppBaseController
      */
     public function index(Request $request)
     {
+        $this->authorize('viewAny', Register::class);
+
         return view('registers.index');
     }
 
@@ -32,6 +35,7 @@ class RegisterController extends AppBaseController
      */
     public function create()
     {
+        $this->authorize('Create', Register::class);
         return view('registers.create');
     }
 
@@ -40,6 +44,7 @@ class RegisterController extends AppBaseController
      */
     public function store(CreateRegisterRequest $request)
     {
+        $this->authorize('Create', Register::class);
         $input = $request->all();
 
         $register = $this->registerRepository->create($input);
@@ -54,6 +59,7 @@ class RegisterController extends AppBaseController
      */
     public function show($id)
     {
+        $this->authorize('ViewAny', Register::class);
         $register = $this->registerRepository->find($id);
 
         if (empty($register)) {
@@ -70,6 +76,7 @@ class RegisterController extends AppBaseController
      */
     public function edit($id)
     {
+        $this->authorize('Update', Register::class);
         $register = $this->registerRepository->find($id);
 
         if (empty($register)) {
@@ -86,6 +93,7 @@ class RegisterController extends AppBaseController
      */
     public function update($id, UpdateRegisterRequest $request)
     {
+        $this->authorize('Update', Register::class);
         $register = $this->registerRepository->find($id);
 
         if (empty($register)) {
@@ -108,6 +116,7 @@ class RegisterController extends AppBaseController
      */
     public function destroy($id)
     {
+        $this->authorize('Delete', Register::class);
         $register = $this->registerRepository->find($id);
 
         if (empty($register)) {

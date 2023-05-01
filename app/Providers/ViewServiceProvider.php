@@ -69,5 +69,13 @@ class ViewServiceProvider extends ServiceProvider
             $view->with('ServiceItems', $ServiceItems)
                  ->with('actionItems', $actionItems);
         });
+        //********* Circulation SendProcessing form fields Views
+        View::composer(['circulation.send_process.fields'], function ($view) {
+            $registersItems = \Auth::user()->service->registers()->where('category',2)->pluck('label_'.App::getLocale(), 'id')->toArray();
+            $ServiceItems = Service::where('id','!=', \Auth::user()->service->id)->get()->pluck('name_'.App::getLocale(), 'id')->toArray();
+            $view->with('ServiceItems', $ServiceItems)
+                ->with('registersItems', $registersItems);
+        });
+
     }
 }

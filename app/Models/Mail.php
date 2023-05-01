@@ -2,9 +2,12 @@
 
 namespace App\Models;
 
+use App\Models\Scopes\MailScope;
+use App\Models\Scopes\ServiceScope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Builder;
 use Plank\Mediable\Mediable;
 
 class Mail extends Model
@@ -18,6 +21,7 @@ class Mail extends Model
         'objet',
         'ref',
         'body',
+        'service_id'
     ];
 
     protected $casts = [
@@ -30,7 +34,7 @@ class Mail extends Model
 
     public static array $rules = [
         'objet' => 'required',
-        'ref' => 'nullable',
+        'ref' => 'required',
     ];
 
     protected $field = [
@@ -48,10 +52,21 @@ class Mail extends Model
         'sent_number',
         'sender_id',
         'arrived_from',
-        'reference_number'
+        'reference_number',
+        'orientation_data',
+        'orientation_text',
+        'dispatched_at'
     ];
 
-    public function registers()
+
+    public function duplicate():Model
+    {
+        $copy = $this->replicate();
+        $copy->save();
+        return $copy;
+    }
+
+    public function registers():BelongsToMany
     {
         return $this->belongsToMany(Register::class)
             ->withPivot($this->field)
@@ -59,7 +74,7 @@ class Mail extends Model
             ->withTimestamps();
     }
 
-    public function actualregister($value)
+    public function actualregister($value):BelongsToMany
     {
         return $this->belongsToMany(Register::class)
             ->withPivot($this->field)
@@ -67,6 +82,60 @@ class Mail extends Model
             ->withTimestamps();
     }
 
+    public function processMailInRegisters($value):BelongsToMany
+    {
+        return $this->belongsToMany(Register::class)
+            ->withPivot($this->field)
+            ->where('receiver_id',$value)
+            ->whereNotNull('processed_at')
+            ->withTimestamps();
+    }
 
+    public function scopeIncome(Builder $builder, $value): void
+    {
+        $builder->whereHas('registers', function ($query) use ($value){
+            $query->where('receiver_id', $value)
+                  ->whereNotNull('recorded_at');
+        });;
+    }
+
+    public function scopeOutcome(Builder $builder, $value): void
+    {
+        $builder->whereHas('registers', function ($query) use ($value){
+            $query->where('sender_id', $value)
+                  ->whereNotNull('sent_at');
+        });;
+    }
+
+    public function scopeNeedprocess(Builder $builder, $value): void
+    {
+        $builder->whereHas('registers', function ($query) use ($value){
+            $query->where('receiver_id', $value)
+                  ->whereNull('processed_at')
+                  ->whereNotNull('recorded_at');
+        });;
+    }
+    public function scopeNeeddispatch(Builder $builder, $value): void
+    {
+        $builder->whereHas('registers', function ($query) use ($value){
+            $query->where('receiver_id', $value)
+                  ->whereNull('dispatched_at');
+        });;
+    }
+
+    public function scopeArrived(Builder $builder, $value): void
+    {
+        $builder->whereHas('registers', function ($query) use ($value){
+            $query->where('receiver_id', $value)
+                  ->whereNull('recorded_at');
+        });;
+    }
+
+    protected static function booted()
+    {
+        static::addGlobalScope(new MailScope());
+        static::addGlobalScope(new ServiceScope());
+
+    }
 }
 

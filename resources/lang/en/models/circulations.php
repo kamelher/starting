@@ -19,7 +19,11 @@ return [
         'updated_at'  => 'Updated At',
         'fiche'=>'Internal Circulation Note',
         'processed_orientations' =>'More Orientations',
-        'response_needed'=>'response required',
+        'response_needed'=>'response required ?',
         'response_deadline'=>'Deadline for response',
+        'Oui' => 'Oui',
+        'Non' => 'Non',
+        'orientations'=>'Orientations',
+        'O_Orientations' => 'Extra orientations'
     ],
 ];

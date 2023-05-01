@@ -2,17 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App;
 use App\Http\Requests\CreateMailRequest;
 use App\Http\Requests\UpdateMailRequest;
-use App\Http\Controllers\AppBaseController;
+use App\Models\Mail;
+use App\Models\Register;
 use App\Repositories\MailRepository;
-use Illuminate\Http\Request;
+use App\Repositories\ServiceRepository;
+use Auth;
 use Flash;
+use Illuminate\Http\Request;
 
 class MailController extends AppBaseController
 {
     /** @var MailRepository $mailRepository*/
-    private $mailRepository;
+    private MailRepository $mailRepository;
 
     public function __construct(MailRepository $mailRepo)
     {
@@ -24,6 +28,7 @@ class MailController extends AppBaseController
      */
     public function index(Request $request)
     {
+        $this->authorize('ViewAny', arguments: Mail::class);
         return view('mails.index');
     }
 
@@ -32,6 +37,7 @@ class MailController extends AppBaseController
      */
     public function create()
     {
+        $this->authorize('create', arguments: Mail::class);
         return view('mails.create');
     }
 
@@ -40,7 +46,9 @@ class MailController extends AppBaseController
      */
     public function store(CreateMailRequest $request)
     {
+        $this->authorize('create', arguments: Mail::class);
         $input = $request->all();
+        $input['service_id'] = Auth::user()->service_id;
 
         $mail = $this->mailRepository->create($input);
 
@@ -54,15 +62,37 @@ class MailController extends AppBaseController
      */
     public function show($id)
     {
+        $this->authorize('ViewAny', arguments: Mail::class);
+
+
         $mail = $this->mailRepository->find($id);
+        $pivot = $mail->actualregister(Auth::id())->first();
+        $returned =[
+            'mail'=>$mail,
+            'pivot'=>$pivot
+        ];
+
+        if(!empty($pivot->pivot->orientation_data)){
+            $data = json_decode($pivot->pivot->orientation_data);
+
+            $receivers = [];
+            foreach ($data as $key => $value) {
+                $column = 'name_' . App::getLocale();
+                $service = (new ServiceRepository())->find($value);
+                $receivers [$key] = $service->$column;
+            }
+
+            $returned['receivers'] = $receivers;
+            $returned['orientations'] = $pivot->pivot->orientation_text;
+        }
 
         if (empty($mail)) {
-            Flash::error(__('models/mails.singular').' '.__('messages.not_found'));
+            Flash::error(__('models/mails.singular') . ' ' . __('messages.not_found'));
 
             return redirect(route('mails.index'));
         }
 
-        return view('mails.show')->with('mail', $mail);
+        return view('mails.show')->with('data',$returned);
     }
 
     /**
@@ -70,6 +100,7 @@ class MailController extends AppBaseController
      */
     public function edit($id)
     {
+        $this->authorize('update', arguments: Mail::class);
         $mail = $this->mailRepository->find($id);
 
         if (empty($mail)) {
@@ -86,6 +117,7 @@ class MailController extends AppBaseController
      */
     public function update($id, UpdateMailRequest $request)
     {
+        $this->authorize('update', arguments: Mail::class);
         $mail = $this->mailRepository->find($id);
 
         if (empty($mail)) {
@@ -108,6 +140,7 @@ class MailController extends AppBaseController
      */
     public function destroy($id)
     {
+        $this->authorize('delete', arguments: Mail::class);
         $mail = $this->mailRepository->find($id);
 
         if (empty($mail)) {

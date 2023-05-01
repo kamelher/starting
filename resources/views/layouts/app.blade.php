@@ -39,14 +39,14 @@
         <ul class="navbar-nav ml-auto">
             <li class="nav-item dropdown user-menu">
                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
-                    <img src="https://assets.infyom.com/logo/blue_logo_150x150.png"
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/%D9%88%D8%B2%D8%A7%D8%B1%D8%A9_%D8%A7%D9%84%D8%AA%D8%B9%D9%84%D9%8A%D9%85_%D8%A7%D9%84%D8%B9%D8%A7%D9%84%D9%8A_%D9%88%D8%A7%D9%84%D8%A8%D8%AD%D8%AB_%D8%A7%D9%84%D8%B9%D9%84%D9%85%D9%8A.svg/langfr-560px-%D9%88%D8%B2%D8%A7%D8%B1%D8%A9_%D8%A7%D9%84%D8%AA%D8%B9%D9%84%D9%8A%D9%85_%D8%A7%D9%84%D8%B9%D8%A7%D9%84%D9%8A_%D9%88%D8%A7%D9%84%D8%A8%D8%AD%D8%AB_%D8%A7%D9%84%D8%B9%D9%84%D9%85%D9%8A.svg.png"
                          class="user-image img-circle elevation-2" alt="User Image">
                     <span class="d-none d-md-inline">{{ Auth::user()->name }}</span>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                     <!-- User image -->
                     <li class="user-header bg-primary">
-                        <img src="https://assets.infyom.com/logo/blue_logo_150x150.png"
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/%D9%88%D8%B2%D8%A7%D8%B1%D8%A9_%D8%A7%D9%84%D8%AA%D8%B9%D9%84%D9%8A%D9%85_%D8%A7%D9%84%D8%B9%D8%A7%D9%84%D9%8A_%D9%88%D8%A7%D9%84%D8%A8%D8%AD%D8%AB_%D8%A7%D9%84%D8%B9%D9%84%D9%85%D9%8A.svg/langfr-560px-%D9%88%D8%B2%D8%A7%D8%B1%D8%A9_%D8%A7%D9%84%D8%AA%D8%B9%D9%84%D9%8A%D9%85_%D8%A7%D9%84%D8%B9%D8%A7%D9%84%D9%8A_%D9%88%D8%A7%D9%84%D8%A8%D8%AD%D8%AB_%D8%A7%D9%84%D8%B9%D9%84%D9%85%D9%8A.svg.png"
                              class="img-circle elevation-2"
                              alt="User Image">
                         <p>
