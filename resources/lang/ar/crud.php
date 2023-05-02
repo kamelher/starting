@@ -16,6 +16,7 @@ return [
     'reset'        => 'استعادة',
     'reload'       => 'إعادة تحميل',
     'action'       => 'عملية',
+    'actions'      => 'عمليات',
     'id'           => 'Id',
     'created_at'   => 'تاريخ الإنشاء',
     'updated_at'   => 'تاريخ آخر تعديل',

@@ -34,20 +34,20 @@ class ServicesTable extends DataTableComponent
                     'path'=>$row->getMedia('thumbnail')
                 ])
             ),
-            Column::make("Name Ar", "name_ar")
+            Column::make(__('models/Services.fields.name_ar'), "name_ar")
                 ->sortable()
                 ->searchable(),
-            Column::make("Name En", "name_en")
+            Column::make(__('models/Services.fields.name_en'), "name_en")
                 ->sortable()
                 ->searchable(),
 
-            Column::make("Abr Latin", "abr_latin")
+            Column::make(__('models/Services.fields.abr_latin'), "abr_latin")
                 ->sortable()
                 ->searchable(),
-            Column::make("Abr Ar", "abr_ar")
+            Column::make(__('models/Services.fields.abr_ar'), "abr_ar")
                 ->sortable()
                 ->searchable(),
-            Column::make("Actions", 'id')
+            Column::make(__('crud.actions'), 'id')
                 ->format(
                     fn($value, $row, Column $column) => view('common.livewire-tables.actions', [
                         'showUrl' => route('services.show', $row->id),
