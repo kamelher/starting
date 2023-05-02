@@ -41,20 +41,20 @@ class arrivedMailsTable extends DataTableComponent
     public function columns(): array
     {
         return [
-            Column::make("Id", "id")
+            Column::make(__('models/Mails.fields.id'), "id")
                 ->sortable()
                 ->searchable(),
 
-            Column::make("Objet", "objet")
+            Column::make(__('models/Mails.fields.objet'), "objet")
                 ->sortable()
                 ->searchable(),
 
-            Column::make("Created at", "created_at")
+            Column::make(__('models/Mails.fields.created_at'), "created_at")
                 ->sortable()
                 ->searchable(),
 
 
-            Column::make("Actions", 'id')
+            Column::make(__('crud.actions'), 'id')
                 ->format(
                     fn($value, $row, Column $column) => view('common.livewire-tables.details.arrivedMails', [
                         'showUrl' => route('mails.show', $row->id),

@@ -29,14 +29,13 @@ class UsersTable extends DataTableComponent
     {
 
         return [
-            Column::make("Name", "name")
+            Column::make(__('models/Users.fields.name'), "name")
                 ->sortable()
                 ->searchable(),
-            Column::make("Email", "email")
+            Column::make(__('models/Users.fields.email'), "email")
                 ->sortable()
                 ->searchable(),
-
-            Column::make("Actions", 'id')
+            Column::make(__('crud.actions'), 'id')
                 ->format(
                     fn($value, $row, Column $column) => view('common.livewire-tables.actions', [
                         'showUrl' => route('users.show', $row->id),

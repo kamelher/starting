@@ -28,13 +28,13 @@ class ActionsTable extends DataTableComponent
     public function columns(): array
     {
         return [
-            Column::make("Name Ar", "name_ar")
+            Column::make(__('models/Actions.fields.name_ar'), "name_ar")
                 ->sortable()
                 ->searchable(),
-            Column::make("Name En", "name_en")
+            Column::make(__('models/Actions.fields.name_en'), "name_en")
                 ->sortable()
                 ->searchable(),
-            Column::make("Actions", 'id')
+            Column::make(__('crud.actions'), 'id')
                 ->format(
                     fn($value, $row, Column $column) => view('common.livewire-tables.actions', [
                         'showUrl' => route('actions.show', $row->id),

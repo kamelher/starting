@@ -13,5 +13,8 @@ return [
         'licence' => 'Licence',
         'created_at' => 'Created At',
         'updated_at' => 'Updated At',
+        'type' => 'Type',
+        'category' => 'Category',
+        'service' => 'Service',
     ],
 ];
