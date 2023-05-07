@@ -24,6 +24,7 @@ return [
         'Oui' => 'Oui',
         'Non' => 'Non',
         'orientations'=>'Orientations',
-        'O_Orientations' => 'Extra orientations'
+        'O_Orientations' => 'Extra orientations',
+        'attachments'=>'Attachments'
     ],
 ];

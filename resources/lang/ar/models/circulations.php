@@ -18,11 +18,12 @@ return [
         'updated_at' => 'تاريخ اخر تعديل',
         'fiche'=>'مذكرة تواصل داخلية',
         'processed_orientations' =>'توجيهات اخرى',
-        'response_needed'=>'تستوجب الرد',
+        'response_needed'=>' تستوجب الرد؟ ',
         'response_deadline'=>'تاريخ الرد',
         'Oui' => 'نعم',
         'Non' => 'لا',
         'orientations'=>'توجيهات',
-        'O_Orientations' => 'توجيهات اضافية'
+        'O_Orientations' => 'توجيهات اضافية',
+        'attachments'=>'المرفقات'
     ],
 ];

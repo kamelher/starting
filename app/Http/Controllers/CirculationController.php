@@ -41,6 +41,23 @@ class CirculationController extends AppBaseController
 
         return view('circulation.record.form')->with('mail', $mail);
     }
+
+    /**
+     * Show all Dossier to choose oon for attaching.
+     */
+    public function attach($id)
+    {
+        $this->authorize('update',App\Models\Mail::class);
+        $mail = $this->mailRepository->find($id);
+
+        if (empty($mail)) {
+            Flash::error(__('models/mails.singular').' '.__('messages.not_found'));
+
+            return redirect(route('mails.index'));
+        }
+
+        return view('circulation.attach.form')->with('mail', $mail);
+    }
     /**
      * Record specified Mail to  register.
      */

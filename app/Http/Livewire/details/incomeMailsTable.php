@@ -3,12 +3,14 @@
 namespace App\Http\Livewire\details;
 
 use App\Models\Mail;
+use App\Models\Register;
 use App\Models\Scopes\MailScope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Laracasts\Flash\Flash;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
+use Rappasoft\LaravelLivewireTables\Views\Filters\SelectFilter;
 
 class incomeMailsTable extends DataTableComponent
 {
@@ -38,6 +40,19 @@ class incomeMailsTable extends DataTableComponent
                     ->income(\Auth::user()->service_id);
     }
 
+    public function filters(): array
+    {
+        return [
+            SelectFilter::make(__('models/registers.fields.category'))
+                ->options(
+                    (new Register())->types[app()->getLocale()]
+                )
+                ->filter(function(Builder $builder, string $value) {
+                    $builder->incomeByType(auth()->user()->service_id, $value);
+                }),
+        ];
+    }
+
     public function columns(): array
     {
         return [
@@ -46,19 +61,15 @@ class incomeMailsTable extends DataTableComponent
                 ->searchable(),
             Column::make(__('models/Mails.fields.ref'), "ref")
                 ->format( function ($value, $row, Column $column){
-                            echo $row->actualregister(\Auth::user()->service_id)->first()->pivot->record_number;
+                          echo $row->actualregister(\Auth::user()->service_id)->first()->pivot->record_number;
                         }
                 )->searchable(),
-
             Column::make(__('models/Mails.fields.objet'), "objet")
                 ->sortable()
                 ->searchable(),
-
             Column::make(__('models/Mails.fields.created_at'), "created_at")
                 ->sortable()
                 ->searchable(),
-
-
             Column::make(__('crud.actions'), 'id')
                 ->format(
                     fn($value, $row, Column $column) => view('common.livewire-tables.details.incomeMails', [

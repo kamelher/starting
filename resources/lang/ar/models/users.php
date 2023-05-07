@@ -10,6 +10,8 @@ return [
         'email_verified_at' => 'تاريخ التفعبل',
         'password' => 'كلمة المرور',
         'remember_token' => 'Remember Token',
+        'sevice_id'=>'المصلحة',
+        'role_id'=>'الدور',
         'created_at' => 'تاريخ الانشاء',
         'updated_at' => 'تاريخ اخر تعديل',
     ],

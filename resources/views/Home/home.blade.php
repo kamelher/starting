@@ -6,4 +6,5 @@
             {{Auth::user()->service->name_en}}
         </h1>
     </div>
+@include('Home.partials.register-stats')
 @endsection

@@ -3,6 +3,9 @@
 namespace App\Services;
 
 use App\Models\Mail;
+use App\Models\Scopes\ServiceScope;
+use App\Repositories\RegisterRepository;
+use App\Repositories\ServiceRepository;
 use Illuminate\Http\Request;
 
 
@@ -49,7 +52,23 @@ class CirculationService
         $data = $this->createReceivers($request);
 
         //attach mails to register with request data
-        foreach ($data as $row) $mail->registers()->attach($row);
+        foreach ($data as $row){
+            //dd($row[$request->register_id]['receiver_id']);
+            $receiverR = (new RegisterRepository())
+                            ->model()::query()
+                            ->where('service_id',$row[$request->register_id]['receiver_id'])
+                            ->withOutGlobalScope(ServiceScope::class)
+                            ->first()->id;
+            $copy = $mail->duplicate($row[$request->register_id]['receiver_id']);
+            $new[$receiverR] = $row[$request->register_id];
+            if($mail->hasMedia('attachments')){
+                foreach ($mail->getMedia('attachments') as $media)
+                    $copy->attachMedia($media,'attachments');
+            }
+            $copy->registers()->attach($new);
+
+            $mail->registers()->attach($row);
+        }
 
         return $mail;
     }
@@ -109,6 +128,8 @@ class CirculationService
     public function storeSendProcessing(Mail $mail, Request $request): Mail
     {
 
+
+        //TODO revoir like Send Duplicate with service_id as receciver and attached with one of his registres.
         $data = $this->createReceivers($request);
         $mail->actualregister(\Auth::user()->service_id)->update(['dispatched_at'=>now()->toDate()]);
         $copy = $mail->duplicate();
