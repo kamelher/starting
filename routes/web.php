@@ -56,11 +56,12 @@ Route::get('circulation/processing/{id}', action: [CirculationController::class,
 
 Route::patch('circulation/processing/{id}', action: [CirculationController::class, 'storeProcessing'])->name('circulation.processing.store');
 
-
+Route::get('circulation/attach/{id}', action: [CirculationController::class, 'attach'])->name('mails.attach');
 /**
  * Get arrived mails
  */
 Route::get('mails/arrived', action: [searchableMailController::class, 'index'])->name('mails.search.arrived');
+
 
 /**
  * Get Income mails
@@ -79,4 +80,9 @@ Route::get('mails/needProcess', action: [searchableMailController::class, 'needp
  */
 Route::get('mails/outcome', action: [searchableMailController::class, 'outcome'])->name('mails.search.outcome');
 
+
+
+
 Route::resource('mails', App\Http\Controllers\MailController::class);
+
+Route::resource('dossiers', App\Http\Controllers\DossierController::class);

@@ -66,7 +66,8 @@ class MailController extends AppBaseController
 
 
         $mail = $this->mailRepository->find($id);
-        $pivot = $mail->actualregister(Auth::id())->first();
+        $pivot = $mail->registers()->first();
+
         $returned =[
             'mail'=>$mail,
             'pivot'=>$pivot
@@ -91,7 +92,7 @@ class MailController extends AppBaseController
 
             return redirect(route('mails.index'));
         }
-
+       // dd($returned);
         return view('mails.show')->with('data',$returned);
     }
 

@@ -12,6 +12,7 @@ class circulation extends Pivot
 
     public $casts = [
         'arrived_at' => 'date',
+        'response_needed'=>'date',
         'recorded_data' => 'array',
         'processed_data' => 'array'
     ];
@@ -20,6 +21,11 @@ class circulation extends Pivot
     public function receiver():BelongsTo
     {
         return $this->belongsTo(Service::class,'receiver_id');
+    }
+
+    public function register():BelongsTo
+    {
+        return $this->belongsTo(Register::class, foreignKey: 'register_id');
     }
 
 

@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
+use App\Models\Scopes\RegisterYearScope;
 use App\Models\Scopes\ServiceScope;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -79,6 +81,17 @@ class Register extends Model
         return $this->belongsTo(Service::class);
     }
 
+
+    public function scopeIncome(Builder $builder,$type=1): void
+    {
+        $builder->where('category', 1);
+    }
+
+    public function scopeOutcome(Builder $builder, $type=1): void
+    {
+        $builder->where('category', 2);
+    }
+
     public function mails()
     {
         return $this->belongsToMany(Mail::class)
@@ -107,6 +120,6 @@ class Register extends Model
     protected static function booted()
     {
         static::addGlobalScope(new ServiceScope());
-
+        static::addGlobalScope(new RegisterYearScope());
     }
 }

@@ -17,7 +17,7 @@
 </div>
 <!-- Role Field -->
 <div class="form-group col-sm-6">
-    {!! Form::label('role_id', __('models/users.fields.sevice_id').':') !!}
+    {!! Form::label('role_id', __('models/users.fields.role_id').':') !!}
     {!! Form::select('role_id',$rolesItems, null, ['class' => 'form-control', 'required']) !!}
 </div>
 

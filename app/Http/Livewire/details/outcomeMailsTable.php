@@ -3,11 +3,15 @@
 namespace App\Http\Livewire\details;
 
 use App\Models\Mail;
+use App\Models\Register;
+use App\Models\Scopes\ServiceScope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Laracasts\Flash\Flash;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
+use Rappasoft\LaravelLivewireTables\Views\Filters\NumberFilter;
+use Rappasoft\LaravelLivewireTables\Views\Filters\SelectFilter;
 
 class outcomeMailsTable extends DataTableComponent
 {
@@ -28,13 +32,30 @@ class outcomeMailsTable extends DataTableComponent
     public function configure(): void
     {
         $this->setPrimaryKey('id');
+        $this->setFilterLayoutSlideDown();    }
+
+    public function filters(): array
+    {
+        return [
+            SelectFilter::make(__('models/registers.fields.category'))
+                ->options(
+                   (new Register())->types[app()->getLocale()]
+                )
+                ->filter(function(Builder $builder, string $value) {
+                    $builder->outcomeByType(auth()->user()->service_id, $value);
+                }),
+        ];
     }
 
     public function builder(): Builder
     {
         return $this->getModel()::query()
-                    ->with($this->getRelationships())
-                    ->outcome(\Auth::user()->service_id);
+                     ->join('mail_register','mails.id', '='  ,'mail_register.mail_id')
+                     ->join('registers','registers.id', '=', 'mail_register.register_id')
+                     ->join('services','services.id', '=', 'mail_register.receiver_id')
+                     ->select('mails.*', 'mail_register.*', 'registers.*','services.*','mails.id as mail_number','services.id as service_number')
+                     ->where('mails.service_id',auth()->user()->service_id)
+                     ->withOutGlobalScope(ServiceScope::class);
     }
 
     public function columns(): array
@@ -45,16 +66,14 @@ class outcomeMailsTable extends DataTableComponent
                 ->searchable(),
             Column::make(__('models/circulations.fields.sent_number'), "id")
                 ->format( function ($value, $row, Column $column){
-                            echo $row->registers(\Auth::user()->service_id)->first()->pivot->sent_number;
+                            echo $row->sent_number;
                         }
                 )->searchable(),
 
             Column::make(__('models/Services.fields.name_ar'), "id")
                 ->format( function ($value, $row, Column $column){
-                    $recivers =  $row->registers(\Auth::user()->service_id)->get();
-                    foreach ($recivers as $receiver){
-                        echo  "<p class='badge-pill badge-warning'>" . $receiver->pivot->receiver->name_ar . "</p>";
-                    }
+                    $recivers =  $row->name_ar;
+                    echo $recivers;
                 }
                 )->searchable(),
 
@@ -71,6 +90,7 @@ class outcomeMailsTable extends DataTableComponent
                 ->format(
                     fn($value, $row, Column $column) => view('common.livewire-tables.details.outcomeMails', [
                         'showUrl' => route('mails.show', $row->id),
+                        'attachUrl'=>route('mails.attach', $row->id),
                         'recordId' => $row->id,
                         'title' => $row->objet,
                     ])

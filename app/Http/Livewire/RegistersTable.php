@@ -2,6 +2,9 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Scopes\RegisterYearScope;
+use App\Models\Scopes\ServiceScope;
+use Illuminate\Database\Eloquent\Builder;
 use Laracasts\Flash\Flash;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
@@ -24,6 +27,16 @@ class RegistersTable extends DataTableComponent
     {
         $this->setPrimaryKey('id');
     }
+
+    public function builder(): Builder
+    {
+        return $this->getModel()::query()
+            ->with($this->getRelationships())
+            ->withoutGlobalScope(RegisterYearScope::class)
+            ->withoutGlobalScope(ServiceScope::class);
+
+    }
+
 
     public function columns(): array
     {
