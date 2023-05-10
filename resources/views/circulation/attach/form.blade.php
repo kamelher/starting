@@ -4,7 +4,7 @@
 
     <div class="card">
 
-        {!! Form::model($mail, ['route' => ['circulation.send.store', $mail->id], 'method' => 'patch', 'files'=>true]) !!}
+        {!! Form::model($mail, ['route' => ['circulation.attach.store', $mail->id], 'method' => 'patch', 'files'=>true]) !!}
 
         <div class="card-body">
             <div class="row">

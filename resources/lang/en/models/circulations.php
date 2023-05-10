@@ -4,7 +4,6 @@ return [
     'singular' => 'Mail',
     'plural' => 'Mails',
     'fields' => [
-
         'receiver_id' => 'Receivers',
         'sent_number' => 'reference',
         'register_id' => 'Register',
@@ -25,6 +24,9 @@ return [
         'Non' => 'Non',
         'orientations'=>'Orientations',
         'O_Orientations' => 'Extra orientations',
-        'attachments'=>'Attachments'
+        'attachments'=>'Attachments',
+        'reference_number'=>'Mail reference',
+        'record_data1'=>'Sender',
+        'record_data2'=>'Objet',
     ],
 ];

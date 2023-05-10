@@ -58,6 +58,29 @@ class CirculationController extends AppBaseController
 
         return view('circulation.attach.form')->with('mail', $mail);
     }
+
+    /**
+     * Record specified Mail to  register.
+     */
+    public function updateAttach($id, Request $request)
+    {
+        $this->authorize('update',App\Models\Mail::class);
+        $mail = $this->mailRepository->find($id);
+
+        if (empty($mail)) {
+            Flash::error(__('models/mails.singular').' '.__('messages.not_found'));
+
+            return redirect(route('mails.index'));
+        }
+
+        $this->circulationService->updateAttach($mail, $request);
+
+        Flash::success(__('messages.updated', ['model' => __('models/mails.singular')]));
+
+        return back();
+    }
+
+
     /**
      * Record specified Mail to  register.
      */

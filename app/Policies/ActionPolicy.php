@@ -63,7 +63,7 @@ class ActionPolicy
      * @param  \App\Models\Models\Action  $action
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, Action $action)
+    public function delete(User $user)
     {
         return $user->canDeleteActions();
     }
@@ -75,7 +75,7 @@ class ActionPolicy
      * @param  \App\Models\Models\Action  $action
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user, Action $action)
+    public function restore(User $user)
     {
         return $user->canDeleteActions();
     }
@@ -87,7 +87,7 @@ class ActionPolicy
      * @param  \App\Models\Models\Action  $action
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, Action $action)
+    public function forceDelete(User $user)
     {
         return $user->canDeleteActions();
     }

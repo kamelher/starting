@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Laracasts\Flash\Flash;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
@@ -9,12 +10,15 @@ use App\Models\Service;
 
 class ServicesTable extends DataTableComponent
 {
+    use AuthorizesRequests;
     protected $model = Service::class;
 
     protected $listeners = ['deleteRecord' => 'deleteRecord'];
 
     public function deleteRecord($id)
     {
+        $this->authorize('delete', Service::class);
+
         Service::find($id)->delete();
         Flash::success(__('messages.deleted', ['model' => __('models/services.singular')]));
         $this->emit('refreshDatatable');

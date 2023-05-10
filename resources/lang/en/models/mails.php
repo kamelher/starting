@@ -1,6 +1,8 @@
 <?php
 
 return [
+    'menu_title'=>'Mails Administration ',
+
     'singular' => 'Mail',
     'plural' => 'Mails',
     'draft' => 'Created Mails',
@@ -9,7 +11,6 @@ return [
     'outcome'=> 'Out-coming Mails',
     'needprocess'=> 'Need Processing Mails',
     'needdispatch'=> 'Need Dispatching Mails',
-
     'fields' => [
         'id' => 'Id',
         'objet' => 'Objet',
@@ -18,5 +19,15 @@ return [
         'created_at' => 'Created At',
         'updated_at' => 'Updated At',
         'attachments' => 'Attachments'
+    ],
+    'button'=>[
+        'view'=>'View',
+        'send'=>'Send',
+        'edit'=>'Edit',
+        'delete'=>'Delete',
+        'record'=>'Record',
+        'attach'=>'Attach to folder',
+        'process'=>'Processing',
+        'dispatch'=>'Dispatch',
     ],
 ];

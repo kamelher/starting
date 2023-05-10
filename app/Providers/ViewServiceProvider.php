@@ -80,7 +80,9 @@ class ViewServiceProvider extends ServiceProvider
 
         //********* Circulation attach form fields Views
         View::composer(['circulation.attach.fields'], function ($view) {
+
             $DossiersItems = auth()->user()->dossiers()->pluck('label_'.App::getLocale(), 'id')->toArray();
+
             $view->with('DossiersItems', $DossiersItems);
         });
 

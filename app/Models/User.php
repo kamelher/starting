@@ -61,7 +61,7 @@ class User  extends Authenticatable
 
     public function dossiers():HasMany
     {
-       return $this->hasMany(Dossier::class);
+       return $this->hasMany(Dossier::class, 'service_id','service_id');
     }
 
 

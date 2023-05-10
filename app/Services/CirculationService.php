@@ -19,6 +19,14 @@ class CirculationService
         return $data;
     }
 
+
+    public function updateAttach(Mail $mail, Request $request): Mail
+    {
+        //TODO Update Dossier Id in Mail
+        $mail->update(['dossier_id'=>$request->dossier_id]);
+        return $mail;
+    }
+
     private function createReceivers(Request $request): array
     {
         $register_id = $request->register_id;
@@ -54,17 +62,20 @@ class CirculationService
         //attach mails to register with request data
         foreach ($data as $row){
             //dd($row[$request->register_id]['receiver_id']);
+            // get a receiver register
             $receiverR = (new RegisterRepository())
                             ->model()::query()
                             ->where('service_id',$row[$request->register_id]['receiver_id'])
                             ->withOutGlobalScope(ServiceScope::class)
                             ->first()->id;
+
             $copy = $mail->duplicate($row[$request->register_id]['receiver_id']);
             $new[$receiverR] = $row[$request->register_id];
             if($mail->hasMedia('attachments')){
                 foreach ($mail->getMedia('attachments') as $media)
                     $copy->attachMedia($media,'attachments');
             }
+
             $copy->registers()->attach($new);
 
             $mail->registers()->attach($row);
@@ -129,18 +140,29 @@ class CirculationService
     {
 
 
-        //TODO revoir like Send Duplicate with service_id as receciver and attached with one of his registres.
+        //TODO like Send Duplicate with service_id as receiver and attached with one of his registres.
         $data = $this->createReceivers($request);
         $mail->actualregister(\Auth::user()->service_id)->update(['dispatched_at'=>now()->toDate()]);
-        $copy = $mail->duplicate();
+        //TODo duplicate the mail to outcome register
+        $outcome = $mail->duplicate($request->register_id);
+
         //attach mails to register with request data
         foreach ($data as $row) {
-            foreach ($row as $key =>$value)
-            {
+
+            $receiverR = (new RegisterRepository())
+                ->model()::query()
+                ->where('service_id',$row[$request->register_id]['receiver_id'])
+                ->withOutGlobalScope(ServiceScope::class)
+                ->first()->id;
+            $copy = $mail->duplicate($row[$request->register_id]['receiver_id']);
+
+            foreach ($row as $key =>$value) {
                 $row[$key]['orientation_data'] = $mail->processMailInRegisters(\Auth::id())->first()->pivot->processed_data;
                 $row[$key]['orientation_text'] = $mail->processMailInRegisters(\Auth::id())->first()->pivot->processed_orientations;
             }
-            $copy->registers()->attach($row);
+            $outcome->registers()->attach($row);
+            $new[$receiverR] = $row[$request->register_id];
+            $copy->registers()->attach($new);
         }
 
         if($mail->hasMedia('attachments')){

@@ -53,8 +53,17 @@ class outcomeMailsTable extends DataTableComponent
                      ->join('mail_register','mails.id', '='  ,'mail_register.mail_id')
                      ->join('registers','registers.id', '=', 'mail_register.register_id')
                      ->join('services','services.id', '=', 'mail_register.receiver_id')
-                     ->select('mails.*', 'mail_register.*', 'registers.*','services.*','mails.id as mail_number','services.id as service_number')
-                     ->where('mails.service_id',auth()->user()->service_id)
+                     ->select('mails.objet',
+                              'mail_register.*',
+                              'registers.category',
+                              'services.name_ar',
+                              'services.name_ar',
+                              'services.name_en',
+                              'mails.id as mail_number',
+                              'services.id as service_number')
+                     ->where('mail_register.sender_id',auth()->user()->service_id)
+                     ->where('registers.category',2)
+                    ->orderBy('mail_register.created_at', 'DESC')
                      ->withOutGlobalScope(ServiceScope::class);
     }
 
@@ -62,7 +71,6 @@ class outcomeMailsTable extends DataTableComponent
     {
         return [
             Column::make(__('models/Mails.fields.id'), "id")
-                ->sortable()
                 ->searchable(),
             Column::make(__('models/circulations.fields.sent_number'), "id")
                 ->format( function ($value, $row, Column $column){
@@ -82,7 +90,6 @@ class outcomeMailsTable extends DataTableComponent
                 ->searchable(),
 
             Column::make(__('models/Mails.fields.created_at'), "created_at")
-                ->sortable()
                 ->searchable(),
 
 
