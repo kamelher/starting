@@ -22,7 +22,7 @@ class incomeMailsTable extends DataTableComponent
 
     public function deleteRecord($id)
     {
-        $this->authorize('ViewAny', Mail::class);
+        $this->authorize('delete', Mail::class);
         Mail::find($id)->delete();
         Flash::success(__('messages.deleted', ['model' => __('models/mails.singular')]));
         $this->emit('refreshDatatable');

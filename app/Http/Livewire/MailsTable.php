@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Models\Register;
 use App\Models\Scopes\MailScope;
+use App\Repositories\MailRepository;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Laracasts\Flash\Flash;
@@ -21,8 +22,9 @@ class MailsTable extends DataTableComponent
 
     public function deleteRecord($id)
     {
-        $this->authorize('ViewAny', Mail::class);
-        Mail::find($id)->delete();
+
+        $this->authorize('delete', Mail::class);
+        (new MailRepository())->find($id)->delete();
         Flash::success(__('messages.deleted', ['model' => __('models/mails.singular')]));
         $this->emit('refreshDatatable');
     }

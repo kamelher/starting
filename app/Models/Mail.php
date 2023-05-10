@@ -21,7 +21,8 @@ class Mail extends Model
         'objet',
         'ref',
         'body',
-        'service_id'
+        'service_id',
+        'dossier_id'
     ];
 
     protected $casts = [

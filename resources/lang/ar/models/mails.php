@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'menu_title'=>'ادارة المراسلات',
     'singular' => 'المراسلة',
     'plural' => 'المراسلات',
     'draft' => 'انشاء مراسلة جديدة',
@@ -18,5 +19,15 @@ return [
         'created_at' => 'تاريخ الانشاء',
         'updated_at' => 'تاريخ اخر تعديل',
         'attachments' => 'المرفقات'
+    ],
+    'button'=>[
+        'view'=>'عرض',
+        'send'=>'ارسال',
+        'edit'=>'تعديل',
+        'delete'=>'حذف',
+        'record'=>'تسجيل',
+        'attach'=>'اضافة الى ملف',
+        'process'=>' المعالجة',
+        'dispatch'=>'توزيع',
     ],
 ];

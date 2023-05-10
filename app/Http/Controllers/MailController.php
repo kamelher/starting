@@ -101,7 +101,9 @@ class MailController extends AppBaseController
      */
     public function edit($id)
     {
+
         $this->authorize('update', arguments: Mail::class);
+
         $mail = $this->mailRepository->find($id);
 
         if (empty($mail)) {
@@ -119,8 +121,9 @@ class MailController extends AppBaseController
     public function update($id, UpdateMailRequest $request)
     {
         $this->authorize('update', arguments: Mail::class);
-        $mail = $this->mailRepository->find($id);
 
+        $mail = $this->mailRepository->find($id);
+        //dd($mail);
         if (empty($mail)) {
             Flash::error(__('models/mails.singular').' '.__('messages.not_found'));
 

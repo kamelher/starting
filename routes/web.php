@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect(route('login'));
 });
 
 Route::get('lang/{lang}', ['as' => 'lang.switch', 'uses' => 'App\Http\Controllers\LanguageController@switchLang']);
@@ -27,7 +27,7 @@ Route::get('lang/{lang}', ['as' => 'lang.switch', 'uses' => 'App\Http\Controller
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 
-Auth::routes();
+Auth::routes(['register'=>false]);
 
 Route::resource('administration/users', App\Http\Controllers\UserController::class);
 
@@ -57,6 +57,8 @@ Route::get('circulation/processing/{id}', action: [CirculationController::class,
 Route::patch('circulation/processing/{id}', action: [CirculationController::class, 'storeProcessing'])->name('circulation.processing.store');
 
 Route::get('circulation/attach/{id}', action: [CirculationController::class, 'attach'])->name('mails.attach');
+
+Route::patch('circulation/attach/{id}', action: [CirculationController::class, 'updateAttach'])->name('circulation.attach.store');
 /**
  * Get arrived mails
  */
@@ -86,3 +88,5 @@ Route::get('mails/outcome', action: [searchableMailController::class, 'outcome']
 Route::resource('mails', App\Http\Controllers\MailController::class);
 
 Route::resource('dossiers', App\Http\Controllers\DossierController::class);
+
+Route::resource('etablissements', App\Http\Controllers\EtablissementController::class);

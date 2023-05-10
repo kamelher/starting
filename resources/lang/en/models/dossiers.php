@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'menu_title'=>'Folders Administration ',
     'singular' => 'Dossier',
     'plural' => 'Dossiers',
     'fields' => [

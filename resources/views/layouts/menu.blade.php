@@ -16,9 +16,10 @@
 @include('partials.secretariat')
 @endrole
 
+
 <li class="nav-item">
-    <a href="{{ route('dossiers.index') }}" class="nav-link {{ Request::is('dossiers*') ? 'active' : '' }}">
+    <a href="{{ route('etablissements.index') }}" class="nav-link {{ Request::is('etablissements*') ? 'active' : '' }}">
         <i class="nav-icon fas fa-home"></i>
-        <p>@lang('models/dossiers.plural')</p>
+        <p>@lang('models/etablissements.plural')</p>
     </a>
 </li>

@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 use App\Models\Scopes\RegisterYearScope;
 use App\Models\Scopes\ServiceScope;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Laracasts\Flash\Flash;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
@@ -12,12 +13,15 @@ use App\Models\Register;
 
 class RegistersTable extends DataTableComponent
 {
+    use AuthorizesRequests;
     protected $model = Register::class;
 
     protected $listeners = ['deleteRecord' => 'deleteRecord'];
 
     public function deleteRecord($id)
     {
+        $this->authorize('delete', Register::class);
+
         Register::find($id)->delete();
         Flash::success(__('messages.deleted', ['model' => __('models/registers.singular')]));
         $this->emit('refreshDatatable');

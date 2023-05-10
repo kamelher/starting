@@ -1,7 +1,7 @@
 <li class="nav-item menu-is-opening menu-open">
     <a href="#" class="nav-link {{ Request::is('mails*') ? 'active' : '' }} ">
-        <i class="nav-icon fas fa-home"></i>
-        <p>@lang('models/mails.plural')
+        <i class="nav-icon fas fa-mail-bulk"></i>
+        <p>@lang('models/mails.menu_title')
             <i class="fas fa-angle-left @if(app()->getLocale()=='en') right @else left @endif"></i>
         </p>
     </a>
@@ -51,3 +51,19 @@
     </ul>
 </li>
 
+<li class="nav-item menu-is-opening menu-open">
+    <a href="#" class="nav-link {{ Request::is('dossiers*') ? 'active' : '' }} ">
+        <i class="nav-icon fas fa-folder-open"></i>
+        <p>@lang('models/dossiers.menu_title')
+            <i class="fas fa-angle-left @if(app()->getLocale()=='en') right @else left @endif"></i>
+        </p>
+    </a>
+    <ul class="nav nav-treeview" style="display: block;">
+        <li class="nav-item">
+            <a href="{{ route('dossiers.index') }}" class="nav-link {{ Request::is('dossiers*') ? 'active' : '' }}">
+                <i class="nav-icon fas fa-folder-minus"></i>
+                <p>@lang('models/dossiers.plural')</p>
+            </a>
+        </li>
+    </ul>
+</li>

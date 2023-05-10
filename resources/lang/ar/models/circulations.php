@@ -24,6 +24,9 @@ return [
         'Non' => 'لا',
         'orientations'=>'توجيهات',
         'O_Orientations' => 'توجيهات اضافية',
-        'attachments'=>'المرفقات'
+        'attachments'=>'المرفقات',
+        'reference_number'=>'مرجع البريد',
+        'record_data1'=>'المرسل',
+        'record_data2'=>'الموصوع',
     ],
 ];
