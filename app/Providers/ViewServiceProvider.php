@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App;
 use App\Models\Dossier;
+use App\Models\Etablissement;
 use App\Models\Register;
 use App\Models\Service;
 use App\Models\User;
@@ -31,6 +32,10 @@ class ViewServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        View::composer('layouts.app', function ($view){
+            $etab = Etablissement::first();
+            $view->with('etab',$etab);
+        });
 
         //********* Dashboard Views
         View::composer(['Home.partials.register-stats'], function ($view) {
@@ -73,7 +78,12 @@ class ViewServiceProvider extends ServiceProvider
         //********* Circulation send form fields Views
         View::composer(['circulation.send.fields'], function ($view) {
             $registersItems = \Auth::user()->service->registers()->where('category',2)->pluck('label_'.App::getLocale(), 'id')->toArray();
-            $ServiceItems = Service::where('id','!=', \Auth::user()->service->id)->get()->pluck('name_'.App::getLocale(), 'id')->toArray();
+            $ServiceItems = Service::where('id','!=', \Auth::user()->service->id)
+                                        ->whereHas('registers', function ($query){
+                                            return $query->withOutGlobalScope(App\Models\Scopes\ServiceScope::class);
+                                        })
+                                        ->get()
+                                        ->pluck('name_'.App::getLocale(), 'id')->toArray();
             $view->with('ServiceItems', $ServiceItems)
                  ->with('registersItems', $registersItems);
         });
