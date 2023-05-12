@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ App::getLocale()}}" dir="{{ Config::get('languages')[App::getLocale()]['dir'] }}">
 <head>
     <meta charset="UTF-8">
     <title>{{ config('app.name') }}</title>
@@ -8,9 +8,18 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"
           integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog=="
           crossorigin="anonymous"/>
+    @if ( 'ar' === App::getLocale())
+        <link href="{{ asset('css/rtl.css') }}" rel="stylesheet">
+    @else
+        <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    @endif
 
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    @livewireStyles
+    <!-- Alpine v3 -->
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
+    <!-- Focus plugin -->
+    <script defer src="https://unpkg.com/@alpinejs/focus@3.x.x/dist/cdn.min.js"></script>
     @stack('third_party_stylesheets')
 
     @stack('page_css')
@@ -30,14 +39,14 @@
         <ul class="navbar-nav ml-auto">
             <li class="nav-item dropdown user-menu">
                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
-                    <img src="https://assets.infyom.com/logo/blue_logo_150x150.png"
+                    <img src=" {{(!empty($etab))?$etab->getMedia('thumbnail')->first()->getUrl():config('app.logo')}}"
                          class="user-image img-circle elevation-2" alt="User Image">
                     <span class="d-none d-md-inline">{{ Auth::user()->name }}</span>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                     <!-- User image -->
                     <li class="user-header bg-primary">
-                        <img src="https://assets.infyom.com/logo/blue_logo_150x150.png"
+                        <img src=" {{(!empty($etab))?$etab->getMedia('thumbnail')->first()->getUrl():config('app.logo')}}"
                              class="img-circle elevation-2"
                              alt="User Image">
                         <p>
@@ -47,8 +56,8 @@
                     </li>
                     <!-- Menu Footer-->
                     <li class="user-footer">
-                        <a href="#" class="btn btn-default btn-flat">Profile</a>
-                        <a href="#" class="btn btn-default btn-flat float-right"
+                        <a href="#" class="btn btn-default btn-flat">{{ __('auth.profile') }}</a>
+                        <a href="#" class="btn btn-default btn-flat "
                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                             {{ __('auth.sign_out') }}
                         </a>
@@ -56,7 +65,23 @@
                             @csrf
                         </form>
                     </li>
+
                 </ul>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="fi fi-{{Config::get('languages')[App::getLocale()]['flag-icon']}}"></span>
+                    {{ Config::get('languages')[App::getLocale()]['display'] }}
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    @foreach (Config::get('languages') as $lang => $language)
+                        @if ($lang != App::getLocale())
+                            <a class="dropdown-item" href="{{ route('lang.switch', $lang) }}">
+                                <span class="fi fi-{{$language['flag-icon']}}"></span>
+                                {{$language['display']}}</a>
+                        @endif
+                    @endforeach
+                </div>
             </li>
         </ul>
     </nav>
@@ -65,23 +90,25 @@
 @include('layouts.sidebar')
 
 <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
+    <div class="content-wrapper p-4">
         @yield('content')
     </div>
 
     <!-- Main Footer -->
     <footer class="main-footer">
         <div class="float-right d-none d-sm-block">
-            <b>Version</b> 3.0.5
+            <b>Version</b> 1.0.0
         </div>
-        <strong>Copyright &copy; 2014-2022 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights
+        <strong>Copyright &copy; 2023 <a href="https://mesrs.dz">Mesrs.dz</a>.</strong> All rights
         reserved.
     </footer>
 </div>
 
-<script src="{{ asset('js/app.js') }}"></script>
-
+<script src="{{ asset('js/app.js') }}" ></script>
 @stack('third_party_scripts')
+@livewireScripts
+@livewire('livewire-ui-modal')
+<script src="//unpkg.com/alpinejs" defer></script>
 
 @stack('page_scripts')
 </body>
