@@ -24,8 +24,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $etab = Etablissement::first();
 
-        return view('Home.home')->with('etab',$etab);
+
+        return view('Home.home');
     }
 }
