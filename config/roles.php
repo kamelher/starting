@@ -139,7 +139,7 @@ return [
     */
 
     // Enable Optional Roles Gui
-    'rolesGuiEnabled'               => env('ROLES_GUI_ENABLED', false),
+    'rolesGuiEnabled'               => env('ROLES_GUI_ENABLED', true),
 
     // Enable `auth` middleware
     'rolesGuiAuthEnabled'           => env('ROLES_GUI_AUTH_ENABLED', true),
@@ -233,7 +233,7 @@ return [
     |--------------------------------------------------------------------------
     */
 
-    'enabledDatatablesJs'           => env('ROLES_GUI_DATATABLES_JS_ENABLED', false),
+    'enabledDatatablesJs'           => env('ROLES_GUI_DATATABLES_JS_ENABLED', true),
     'datatablesJsStartCount'        => env('ROLES_GUI_DATATABLES_JS_START_COUNT', 25),
     'datatablesCssCDN'              => env('ROLES_GUI_DATATABLES_CSS_CDN', 'https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css'),
     'datatablesJsCDN'               => env('ROLES_GUI_DATATABLES_JS_CDN', 'https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js'),
@@ -245,7 +245,7 @@ return [
     |--------------------------------------------------------------------------
     */
 
-    'laravelUsersEnabled'           => env('ROLES_GUI_LARAVEL_ROLES_ENABLED', false),
+    'laravelUsersEnabled'           => env('ROLES_GUI_LARAVEL_ROLES_ENABLED', true),
 
     /*
     |--------------------------------------------------------------------------

@@ -48,7 +48,9 @@
 @endsection
 
 @section('content')
-
+    <h1 class="text-black-50">
+        {{__('laravelroles::laravelroles.titles.dashboard') }}
+    </h1>
     @include('laravelroles::laravelroles.partials.flash-messages')
 
     <div class="container-fluid">

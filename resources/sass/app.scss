@@ -3,5 +3,8 @@
 
 // Bootstrap
 @import '~admin-lte/build/scss/adminlte';
-
-@import 'custom'
+@import '~select2/src/scss/core';
+@import '~select2/src/scss/theme/classic/layout';
+@import "~flag-icons/sass/flag-icons";
+@import "bootstrap-switch-button/css/bootstrap-switch-button.css";
+@import 'custom';

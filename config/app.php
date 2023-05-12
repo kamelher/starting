@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\Language;
 use Illuminate\Support\Facades\Facade;
 
 return [
@@ -16,6 +17,8 @@ return [
     */
 
     'name' => env('APP_NAME', 'Laravel'),
+
+    'logo' => env('APP_LOGO', 'Laravel'),
 
     /*
     |--------------------------------------------------------------------------
@@ -82,7 +85,7 @@ return [
     |
     */
 
-    'locale' => 'en',
+    'locale' => 'ar',
 
     /*
     |--------------------------------------------------------------------------
@@ -95,7 +98,7 @@ return [
     |
     */
 
-    'fallback_locale' => 'en',
+    'fallback_locale' => 'ar',
 
     /*
     |--------------------------------------------------------------------------
@@ -194,6 +197,8 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        \App\Providers\ViewServiceProvider::class,
+
 
     ],
 
