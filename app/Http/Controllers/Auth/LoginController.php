@@ -46,7 +46,7 @@ class LoginController extends Controller
      */
     public function showLoginForm()
     {
-        $etab = Etablissement::first();
-        return view('auth.create')->with('etab',$etab);
+
+        return view('auth.create');
     }
 }

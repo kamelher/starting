@@ -18,7 +18,6 @@ class UsersTableSeeder extends Seeder
             'name'=>'Admin',
             'email'=>'admin@admin.com',
             'password'=>bcrypt('password'),
-            'service_id' =>  1
         ]);
         $roleAdmin = config('roles.models.role')::where('name', '=', 'Admin')->first();
 
