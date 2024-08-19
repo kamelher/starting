@@ -6,9 +6,5 @@
             {{Auth::user()->name_en}}
         </h1>
     </div>
-
-    @include('Home.partials.today-stats', ['mealsPerDou' => $mealsPerDou])
-    @include('Home.partials.charts-stats', ['chart' => $chart])
+    @include('Home.partials.all_by_resto')
 @endsection
-
-@

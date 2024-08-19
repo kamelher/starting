@@ -6,9 +6,14 @@
     </a>
 </li>
 @role('admin')
+
 @include('partials.admin')
+@include('partials.dou')
 @endrole
 
+@role('dou')
+@include('partials.dou')
+@endrole
 
 <li class="nav-item">
     <a href="{{ route('clients.index') }}" class="nav-link {{ Request::is('clients*') ? 'active' : '' }}">

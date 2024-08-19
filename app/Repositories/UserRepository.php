@@ -37,4 +37,15 @@ class UserRepository extends BaseRepository
 
         return $user;
     }
+
+    public function update(array $input, $id): Model
+    {
+        $user = parent::update($input, $id);
+
+        $roleAdmin = config('roles.models.role')::where('id', '=', $input['role_id'])->first();
+
+        $user->syncRoles($roleAdmin);
+
+        return $user;
+    }
 }

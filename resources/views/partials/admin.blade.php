@@ -1,9 +1,9 @@
-@include('partials.common')
+
 <li class="nav-item menu-is-opening menu-open">
     <a href="#" class="nav-link {{ Request::is('administration*') ? 'active' : '' }} ">
         <i class="nav-icon fas fa-home"></i>
         <p>@lang('nav.settings')
-            <i class="fas fa-angle-left @if(app()->getLocale()=='en') right @else left @endif""></i>
+            <i class="fas fa-angle-left @if(app()->getLocale()=='en') right @else left @endif"></i>
         </p>
     </a>
     <ul class="nav nav-treeview" style="display: block;">

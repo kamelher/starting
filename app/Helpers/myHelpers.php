@@ -4,8 +4,6 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Artisan;
 
 if (!function_exists('getAllModels')) {
-
-
     function getAllModels()
     {
         $models = [];
@@ -50,5 +48,21 @@ if (!function_exists('generateAllPolicies')){
         }
 
         return 0;
+    }
+}
+
+
+if(!function_exists('getRandomBackground')){
+    function getRandomBackground(){
+        $backgrounds = [
+            'bg-primary',
+            'bg-success',
+            'bg-danger',
+            'bg-warning',
+            'bg-info',
+
+        ];
+
+        return $backgrounds[array_rand($backgrounds)];
     }
 }

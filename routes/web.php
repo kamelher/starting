@@ -25,6 +25,7 @@ Route::get('/', function () {
 Auth::routes(['register'=>false]);
 Route::get('lang/{lang}', ['as' => 'lang.switch', 'uses' => 'App\Http\Controllers\LanguageController@switchLang']);
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/stats/{page}', [App\Http\Controllers\HomeController::class, 'stats'])->name('stats');
 Route::resource('administration/users', App\Http\Controllers\UserController::class);
 
 

@@ -24,9 +24,14 @@ class Meal extends Model
         return $this->belongsTo(Resto::class, 'resto_id', 'id');
     }
 
+    public function mealType()
+    {
+        return $this->belongsTo(MealType::class, 'meal_type', 'id');
+    }
+
     public function scopeByMealsPerDate($query, $date)
     {
-        return $query->whereDate('created_at', '=', DATE($date));
+        return $query->whereDate('meals.created_at', '=', DATE($date));
     }
 
     public function scopeByMealsPerResto($query, $resto_id)
@@ -41,23 +46,26 @@ class Meal extends Model
 
     public function scopeByMealsPerDou($query, $dou_code)
     {
-        return $query->whereIn('resto_id', Resto::select('id')->where('dou_code', $dou_code));
+        return $query->select('*')
+                            ->join('restos', 'restos.id', '=', 'meals.resto_id')
+                            ->where('restos.dou_code', $dou_code);
+
     }
 
     public function scopeByMealsGroupByResto($query, $dou_code)
     {
         return $query->select(DB::raw('DATE(meals.created_at) as create_date'),
-                                        'meals.resto_id',
-                                        'meal_types.id',
-                                        DB::raw('count(*) as count'),
+                                        //DB::raw('count(*) as count'),
                                         'restos.name as resto',
                                         'meal_types.name'
                                         )
                             ->join('restos', 'restos.id', '=', 'meals.resto_id')
                             ->join('meal_types', 'meal_types.id', '=', 'meals.meal_type')
-                            ->byMealsPerDou($dou_code)
+                            ->where('restos.dou_code', $dou_code)
                             ->groupBy(['resto_id', 'meal_types.id', 'create_date', 'restos.name','meal_types.name'])
                             ->orderBy('create_date', 'desc');
     }
+
+
 
 }
