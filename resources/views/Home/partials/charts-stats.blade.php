@@ -7,7 +7,7 @@
             <div class="card-header ui-sortable-handle" style="cursor: move;">
                 <h3 class="card-title">
                     <i class="fas fa-chart-pie mr-1"></i>
-                    Monthly Meals
+                    Monthly Meals '{{$month}} - {{$year}}'
                 </h3>
                 <div class="card-tools">
                     <ul class="nav nav-pills ml-auto">
@@ -68,7 +68,7 @@
                             <div class="col-sm-8">
                                 <select name="year" id="year" class="form-control">
                                     <option value="---">--------</option>
-                                    @for($i = 2024; $i <= date('Y'); $i++)
+                                    @for($i = 2023; $i <= date('Y'); $i++)
                                         <option value="{{$i}}">{{$i}}</option>
                                     @endfor
                                 </select>

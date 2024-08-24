@@ -55,7 +55,7 @@ class StatisticsService
     public function statsPerMealsPerDou($date, $dou_code): array|\Illuminate\Support\Collection
     {
         $result = [];
-        $mealsTypes = MealType::all();
+        $mealsTypes = MealType::orderBy('id')->get();
         foreach ($mealsTypes as $mealType) {
             //if the user is a dou then we will get the number of meals per type for the current date and the connected dou
                 if(auth()->user()->hasRole('dou'))
@@ -66,6 +66,12 @@ class StatisticsService
                 if(auth()->user()->hasRole('onou') || auth()->user()->hasRole('admin'))
                     $result[$mealType->name] = Mealstatsperday::byMealsTodayOnou($date)
                                                  ->where('meal_type_id', $mealType->id)->get();
+
+
+            //if the user is a residence or admin then we will get the number of meals per type for the current date and the connected
+            if(auth()->user()->hasRole('residence') || auth()->user()->hasRole('admin'))
+                $result[$mealType->name] = Mealstatsperday::byMealsTodayResidence($date)
+                                ->where('meal_type_id', $mealType->id)->get();
         }
         return  $result;
     }

@@ -19,5 +19,10 @@ class vendeurScope implements Scope
             $builder->whereHas('resto', function ($query) {
                 $query->where('dou_code', auth()->user()->code_dou);
             });
+
+        if(auth()->user()->hasRole('residence'))
+            $builder->whereHas('resto', function ($query) {
+                $query->where('id_progres', auth()->user()->residence_id);
+            });
     }
 }

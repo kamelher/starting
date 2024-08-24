@@ -40,14 +40,25 @@ class HomeController extends Controller
        //When the user is Onou.
 
        //When the user is Residence
-
+        $mealsPerDou = $statisticsService
+            ->statsPerMealsPerDou(
+                Carbon::now()->format('Y-m-d'),
+                //'2024-05-15',
+                auth()->user()->progres_id);
         // create a chart for monthly meals
-       if($request->month) {
-            $chart = (new ChartService)->MonthlyMeals($request->month);
-       }
-       else
-            $chart = (new ChartService) ->MonthlyMeals(Carbon::now()->month);
-       return view('Home.home', ['mealsPerDou' => $mealsPerDou,'chart' => $chart]);
+        $month = ($request->month)?$request->month: Carbon::now()->month;
+
+        $year = ($request->year)?$request->year: Carbon::now()->year;
+
+        $chart = (new ChartService) ->MonthlyMeals($month, $year);
+
+        return view('Home.home',
+            [
+                'mealsPerDou' => $mealsPerDou,
+                'chart' => $chart,
+                'month' => $month,
+                'year' => $year
+            ]);
     }
 
 

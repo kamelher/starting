@@ -26,15 +26,12 @@ class ChartService
         $dinner = [];
 
         foreach ($labels as $label){
-            $Breakfast[$label]=$dataset->where('mealType_id', 1)
-                ->where('create_date', $label)
-                ->sum('count');
-            $launch[$label] = $dataset->where('mealType_id', 2)
-                ->where('create_date', $label)
-                ->sum('count');
-            $dinner[$label] = $dataset->where('mealType_id', 3)
-                ->where('create_date', $label)
-                ->sum('count');
+            $Breakfast[$label]=$dataset->where('create_date', $label)
+                ->sum('breakfast');
+            $launch[$label] = $dataset->where('create_date', $label)
+                ->sum('launch');
+            $dinner[$label] = $dataset->where('create_date', $label)
+                ->sum('dinner');
         }
 
         $chart->labels($labels);

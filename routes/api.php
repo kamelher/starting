@@ -32,3 +32,7 @@ Route::resource('restos', App\Http\Controllers\API\RestoAPIController::class)
 
 Route::resource('mealTypes', App\Http\Controllers\API\MealTypeAPIController::class)
     ->except(['create', 'edit']);
+
+
+Route::resource('residences', App\Http\Controllers\API\ResidencesAPIController::class)
+    ->except(['create', 'edit']);

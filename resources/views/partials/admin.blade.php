@@ -1,14 +1,12 @@
 
-<li class="nav-item menu-is-opening menu-open">
+<li class="nav-item">
     <a href="#" class="nav-link {{ Request::is('administration*') ? 'active' : '' }} ">
         <i class="nav-icon fas fa-home"></i>
         <p>@lang('nav.settings')
             <i class="fas fa-angle-left @if(app()->getLocale()=='en') right @else left @endif"></i>
         </p>
     </a>
-    <ul class="nav nav-treeview" style="display: block;">
-
-
+    <ul class="nav nav-treeview" >
         <li class="nav-item">
             <a href="{{ route('users.index') }}" class="nav-link {{ Request::is('administration/users*') ? 'active' : '' }}">
                 <i class="nav-icon fas fa-users-cog"></i>
@@ -26,3 +24,23 @@
     </ul>
 </li>
 
+<li class="nav-item">
+    <a href="{{ route('clients.index') }}" class="nav-link {{ Request::is('clients*') ? 'active' : '' }}">
+        <i class="nav-icon fas fa-home"></i>
+        <p>@lang('models/clients.plural')</p>
+    </a>
+</li>
+
+<li class="nav-item">
+    <a href="{{ route('meal-types.index') }}" class="nav-link {{ Request::is('mealTypes*') ? 'active' : '' }}">
+        <i class="nav-icon fas fa-home"></i>
+        <p>@lang('models/mealTypes.plural')</p>
+    </a>
+</li>
+
+<li class="nav-item">
+    <a href="{{ route('residences.index') }}" class="nav-link {{ Request::is('residences*') ? 'active' : '' }}">
+        <i class="nav-icon fas fa-home"></i>
+        <p>@lang('models/residences.plural')</p>
+    </a>
+</li>

@@ -50,3 +50,5 @@ Route::resource('vendeurs', App\Http\Controllers\VendeurController::class);
 Route::resource('dfms', App\Http\Controllers\DfmController::class);
 Route::resource('restos', App\Http\Controllers\RestoController::class);
 Route::resource('meal-types', App\Http\Controllers\MealTypeController::class);
+
+Route::resource('residences', App\Http\Controllers\ResidencesController::class);
